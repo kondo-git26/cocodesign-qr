@@ -1,0 +1,25 @@
+# Netlify 用の設定。
+# next.config.mjs で output: 'export' を指定しているため、
+# ビルド成果物の out/ をそのまま公開します。
+
+[build]
+  command = "npm run build"
+  publish = "out"
+
+[build.environment]
+  NODE_VERSION = "24"
+
+# canonical / OGP / sitemap の絶対URLは src/lib/content/site.ts の既定値を使います。
+# 独自ドメインへ移すときは、そこか NEXT_PUBLIC_SITE_URL（管理画面の環境変数）で上書きしてください。
+
+# 静的アセットは内容ハッシュ付きのため長期キャッシュして問題ありません
+[[headers]]
+  for = "/_next/static/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

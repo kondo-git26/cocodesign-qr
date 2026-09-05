@@ -1,0 +1,83 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* ヘッダー分だけアンカー位置をずらす */
+    scroll-padding-top: 4.5rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-paper text-ink antialiased;
+    font-feature-settings: 'palt' 1;
+  }
+
+  /* 日本語は行間を広めに取り、折り返しを禁則に任せる */
+  p,
+  li,
+  dd {
+    line-break: strict;
+    overflow-wrap: anywhere;
+  }
+
+  ::selection {
+    background-color: #f2e7be;
+    color: #111111;
+  }
+
+  :focus-visible {
+    outline: 2px solid #b4482f;
+    outline-offset: 2px;
+  }
+
+  /* FAQ のアコーディオン（details 要素）の既定マーカーを外す */
+  summary {
+    list-style: none;
+    cursor: pointer;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* 方眼の地。デザインの骨格（グリッド）を薄く見せるための背景 */
+  .grid-paper {
+    background-image:
+      linear-gradient(to right, #ececeb 1px, transparent 1px),
+      linear-gradient(to bottom, #ececeb 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+
+  .grid-paper-fade {
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 72%);
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 72%);
+  }
+
+  /* 技術情報を表示する小さなラベル */
+  .spec-label {
+    @apply font-mono text-2xs uppercase tracking-widest text-sumi-500;
+  }
+}
