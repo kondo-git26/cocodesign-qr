@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>https://kondo-git26.github.io/cocodesign-qr/</loc>
+<lastmod>2026-09-05T22:43:43.720Z</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1</priority>
+</url>
+<url>
+<loc>https://kondo-git26.github.io/cocodesign-qr/contact/</loc>
+<lastmod>2026-09-05T22:43:43.720Z</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+<url>
+<loc>https://kondo-git26.github.io/cocodesign-qr/terms/</loc>
+<lastmod>2026-09-05T22:43:43.720Z</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.2</priority>
+</url>
+<url>
+<loc>https://kondo-git26.github.io/cocodesign-qr/privacy/</loc>
+<lastmod>2026-09-05T22:43:43.720Z</lastmod>
+<changefreq>yearly</changefreq>
+<priority>0.2</priority>
+</url>
+</urlset>

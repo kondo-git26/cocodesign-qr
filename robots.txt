@@ -1,0 +1,4 @@
+User-Agent: *
+Allow: /
+
+Sitemap: https://kondo-git26.github.io/cocodesign-qr/sitemap.xml
