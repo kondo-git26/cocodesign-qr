@@ -41,22 +41,31 @@ npm run dev
 
 | URL | 内容 |
 | --- | --- |
-| **<https://cocodesign-qr.netlify.app/>** | 現行版（ヘッダー・ヒーロー・変換フォームを分けた構成） |
-| **<https://cocodesign-qr.netlify.app/v2/>** | 試作 v2（ファーストビューと変換を一体化。`noindex`） |
+| **<https://kondo-git26.github.io/cocodesign-qr/>** | 現行版 |
+| **<https://kondo-git26.github.io/cocodesign-qr/v2/>** | 試作 v2（ファーストビューと変換を一体化。`noindex`） |
 
-Netlify でホストしています。再デプロイは次の2行だけです。
+GitHub Pages（リポジトリ <https://github.com/kondo-git26/cocodesign-qr>）で公開しています。
+`main` にソース、`gh-pages` にビルド済みサイトを置く構成です。
+
+### 更新のしかた
+
+サブディレクトリ配信のため、ビルド時に `NEXT_PUBLIC_BASE_PATH` が必要です。
 
 ```bash
-npm run build
+NEXT_PUBLIC_BASE_PATH=/cocodesign-qr NEXT_PUBLIC_SITE_URL=https://kondo-git26.github.io/cocodesign-qr npm run build
 ```
 
-```bash
-npx netlify deploy --dir=out --prod
-```
+そのうえで `out/` の中身を `gh-pages` ブランチへ push します（`.nojekyll` を必ず含めること。
+これが無いと `_next/` ディレクトリが Jekyll に無視されて CSS・JS が 404 になります）。
 
-`netlify.toml` を置いてあるので、GitHubリポジトリと連携すればプッシュ時の自動ビルドにも切り替えられます。
-サイトの管理画面は <https://app.netlify.com/projects/cocodesign-qr> です。
-公開をやめる場合は、管理画面の Site configuration → Danger zone からサイトごと削除できます。
+### ルート直下で公開する場合
+
+独自ドメインや Netlify などルート直下で公開するときは `NEXT_PUBLIC_BASE_PATH` を付けずにビルドします。
+`basePath` が空になり、内部リンクもそのまま動きます。
+
+> **Netlify について**：以前 <https://cocodesign-qr.netlify.app/> でも公開していましたが、
+> 無料プランのクレジットを使い切ったため本番デプロイが停止しています。
+> 設定（`netlify.toml`）は残してあるので、クレジット回復後はそのまま使えます。
 
 ---
 
@@ -245,9 +254,12 @@ src/
 
 - 「本文へスキップ」リンクを設置
 - FAQ・詳細は `details` / `summary`（JavaScriptなしで開閉、キーボード対応）
-- v2 のドロップ領域は `role="button"` + Enter / Space で操作可能、状態変化は `aria-live` で通知
+- v2 のドロップ領域は、外枠ではなく中の本物の `<button>` で操作します（外枠を `role="button"` にすると
+  中の画像やエラー文が支援技術から読めなくなるため）。状態変化は `aria-live` で通知します
 - ボタン・フォーム部品に `aria-label` / `aria-describedby` / `role="alert"` を設定
 - フォーカスリングを明示（朱色・2px）、`prefers-reduced-motion` に対応
+- 文字色は白地で 4.5:1 以上を確保（`sumi-500` = #6E6E69 で 5.13:1）
+- 小さなテキストリンクもタップ領域を 44px 以上に確保
 - Webフォントを読み込まない（日本語はシステムフォント）
 - ヒーローのQRはビルド時に生成した静的SVG・PNG。QR読み取りのライブラリ（約50KB）はクライアント側のみ
 
