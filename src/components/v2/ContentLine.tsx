@@ -22,8 +22,9 @@ export function ContentLine({
 }) {
   return (
     <div>
+      {/* ラベルは役割だけ。入れられるものは placeholder が説明する（同じ文言を二度読ませない） */}
       <label htmlFor="v2-content" className="sr-only">
-        QRの内容（URLまたはテキスト）
+        QRの内容
       </label>
       <input
         id="v2-content"

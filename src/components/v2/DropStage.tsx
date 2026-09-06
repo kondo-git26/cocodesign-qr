@@ -368,7 +368,7 @@ export function DropStage() {
       <div className="relative mx-auto w-full max-w-2xl px-5 pb-16 pt-12 sm:px-8 md:pb-24 md:pt-16">
         <h1
           id="v2-heading"
-          className="text-center text-[1.375rem] font-bold leading-snug tracking-japanese text-ink sm:text-2xl md:text-[1.75rem]"
+          className="text-center text-xl font-bold leading-snug tracking-japanese text-ink sm:text-2xl md:text-[1.75rem]"
         >
           {/* 狭い画面では読点で折り返す（「ベクタ／ーに」のような単語途中の改行を避ける） */}
           <span className="inline-block">QRコードを、</span>

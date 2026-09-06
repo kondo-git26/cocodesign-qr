@@ -72,7 +72,8 @@ export function Stage({
         className={[
           'pointer-events-none absolute inset-0 rounded-sm bg-tray transition-[opacity,box-shadow] duration-300',
           idle ? 'opacity-100' : 'opacity-0',
-          dragging ? 'shadow-tray-deep' : 'shadow-tray group-hover:shadow-tray-deep',
+          // hover の沈み込みはポインタが hover できる端末だけ（タッチ端末で影が残らないように）
+          dragging ? 'shadow-tray-deep' : 'shadow-tray [@media(hover:hover)]:group-hover:shadow-tray-deep',
         ].join(' ')}
       />
 

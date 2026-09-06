@@ -3,6 +3,17 @@
  * デザイントークンの定義。意図は DESIGN.md を参照してください。
  */
 
+// 補助色の生成り。トレイのグラデーションもここから作る（単一の出どころにするため）
+const KINARI = '#F2E7BE';
+
+/** 16進カラーを白と混ぜる。t=0 で元の色、t=1 で白 */
+function towardWhite(hex, t) {
+  const n = parseInt(hex.slice(1), 16);
+  const mix = (c) => Math.round(c + (255 - c) * t);
+  const [r, g, b] = [(n >> 16) & 255, (n >> 8) & 255, n & 255].map(mix);
+  return `#${[r, g, b].map((c) => c.toString(16).padStart(2, '0')).join('')}`;
+}
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{ts,tsx}'],
@@ -36,7 +47,7 @@ module.exports = {
         // 補助色（面積は最小限に使う）
         shu: '#B4482F', // 落ち着いた朱色：注意・強調
         aomidori: '#2C6B62', // 青緑：確認済み・成功
-        kinari: '#F2E7BE', // 淡い黄：補足のハイライト
+        kinari: KINARI, // 淡い黄：補足のハイライト、置き場のトレイ
       },
       fontFamily: {
         sans: [
@@ -80,9 +91,9 @@ module.exports = {
         'tray-deep': 'inset 0 3px 10px rgba(70,58,20,0.24), inset 0 -1px 0 rgba(255,255,255,0.8)',
       },
       backgroundImage: {
-        // 生成りのトレイ。上が少し濃く、下へ向かって紙の白に近づく。
+        // 生成りのトレイ。上は kinari そのもの、下へ向かって紙の白に近づく。
         // グラデーションはこの置き場だけに使う（DESIGN.md §3）
-        tray: 'linear-gradient(180deg, #EDE3C2 0%, #F6F0D9 30%, #F9F5E7 100%)',
+        tray: `linear-gradient(180deg, ${KINARI} 0%, ${towardWhite(KINARI, 0.5)} 30%, ${towardWhite(KINARI, 0.65)} 100%)`,
       },
       keyframes: {
         'module-in': {

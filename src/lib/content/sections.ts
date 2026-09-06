@@ -73,7 +73,7 @@ export const STEPS: StepItem[] = [
   {
     no: '1',
     title: 'QRコードをアップロード',
-    body: 'JPG・PNG・PDFに対応。ドラッグ&ドロップでもファイル選択でも構いません。',
+    body: 'JPG・PNG・WebPに対応。ドラッグ&ドロップでもファイル選択でも構いません。',
     icon: 'upload',
   },
   {
