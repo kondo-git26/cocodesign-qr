@@ -41,6 +41,11 @@ npm run dev
 
 **<https://cocodesign.pro>**
 
+| URL | 内容 |
+| --- | --- |
+| `/` | 本サイト。置く場所ひとつのファーストビュー |
+| `/v1/` | 旧デザイン（ファーストビューと変換フォームを分けていた頃）。比較用・`noindex` |
+
 Cloudflare Pages でホストしています（Cloudflare アカウント：`Kondow@gmail.com's Account`）。
 GitHub リポジトリ <https://github.com/kondo-git26/cocodesign-qr> の `main` に push すると
 自動でビルド・デプロイされます。
@@ -234,17 +239,17 @@ NEXT_PUBLIC_CONVERT_API_BASE=https://api.example.com/qr
 src/
 ├── app/
 │   ├── layout.tsx            … メタデータ（title / description / OGP）、html/body
-│   ├── (site)/               … 現行版：Header + Footer 付きレイアウト
-│   │   ├── page.tsx          … トップ（/）
+│   ├── (site)/               … 本サイト：SiteHeader（ロゴと「無料」のみ）+ Footer
+│   │   ├── page.tsx          … トップ（/）＝ DropStage + 各セクション
 │   │   ├── contact/ terms/ privacy/
 │   │   └── layout.tsx
-│   ├── (v2)/v2/              … 試作 v2：最小ヘッダーのレイアウト（/v2/）
+│   ├── (v1)/v1/              … 旧デザイン（比較用・noindex）。従来の Header を使う
 │   ├── globals.css / icon.svg / robots.ts / sitemap.ts
 ├── components/
-│   ├── layout/               … Header（モバイルメニュー）、Footer
+│   ├── layout/               … SiteHeader（本サイト）、Header（/v1/ 用・ナビ付き）、Footer
 │   ├── sections/             … 現行版の各セクション（v2 でも FV 以下で再利用）
 │   ├── converter/            … 現行版の変換フォームの部品
-│   ├── v2/                   … v2 のファーストビュー
+│   ├── v2/                   … ファーストビュー（置く→鮮明になる→受け取る）
 │   │   ├── DropStage.tsx     … 状態管理（置く / 貼る / 打つ → 読み取り → 受け取る）
 │   │   ├── Stage.tsx         … 置く場所であり結果が現れる場所（ワイプ演出）
 │   │   ├── ContentLine.tsx   … 「QRの中身」の1行（表示 兼 入力）

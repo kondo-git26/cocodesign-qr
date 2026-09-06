@@ -1,15 +1,16 @@
 import { internalHref, SITE } from '@/lib/content/site';
 
 /**
- * v2 のヘッダー。ロゴと「無料」だけ。
- * ナビゲーションは置かない（FV で説明を読ませない方針に合わせる）。
+ * 本サイトのヘッダー。ロゴと「無料」だけ。
+ * ナビゲーションは置かない（ファーストビューで説明を読ませない方針に合わせる）。
+ * 旧デザイン（/v1/）は従来の Header をそのまま使います。
  */
-export function V2Header() {
+export function SiteHeader() {
   return (
     <header className="border-b border-sumi-200 bg-paper">
       <div className="mx-auto flex h-14 w-full max-w-content items-center justify-between px-5 sm:px-8 md:h-16">
         <a
-          href={internalHref('/v2/')}
+          href={internalHref('/')}
           className="flex items-baseline gap-2 text-[0.9375rem] font-bold tracking-japanese text-ink"
         >
           <span aria-hidden="true" className="grid grid-cols-2 gap-[2px]">
