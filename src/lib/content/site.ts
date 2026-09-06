@@ -8,7 +8,7 @@ export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH ?? '';
 
 /** 公開URL（BASE_PATH を含む絶対URL・末尾スラッシュなし） */
 export const SITE_URL = (
-  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cocodesign-qr.netlify.app'
+  process.env.NEXT_PUBLIC_SITE_URL ?? 'https://cocodesign.pro'
 ).replace(/\/+$/, '');
 
 /**

@@ -39,33 +39,44 @@ npm run dev
 
 ## 2. 公開先
 
-| URL | 内容 |
+**<https://cocodesign.pro>**
+
+Cloudflare Pages でホストしています（Cloudflare アカウント：`Kondow@gmail.com's Account`）。
+GitHub リポジトリ <https://github.com/kondo-git26/cocodesign-qr> の `main` に push すると
+自動でビルド・デプロイされます。
+
+### Cloudflare Pages の設定
+
+| 項目 | 値 |
 | --- | --- |
-| **<https://kondo-git26.github.io/cocodesign-qr/>** | 現行版 |
-| **<https://kondo-git26.github.io/cocodesign-qr/v2/>** | 試作 v2（ファーストビューと変換を一体化。`noindex`） |
+| Framework preset | None |
+| Build command | `npm run build` |
+| Build output directory | `out` |
+| Node.js version | `.node-version`（22）で固定 |
+| 環境変数 | `NEXT_PUBLIC_SITE_URL` = `https://cocodesign.pro` |
 
-GitHub Pages（リポジトリ <https://github.com/kondo-git26/cocodesign-qr>）で公開しています。
-`main` にソース、`gh-pages` にビルド済みサイトを置く構成です。
+`NEXT_PUBLIC_BASE_PATH` は**設定しません**。ルート直下で配信するためです。
 
-### 更新のしかた
+### ドメイン
 
-サブディレクトリ配信のため、ビルド時に `NEXT_PUBLIC_BASE_PATH` が必要です。
+`cocodesign.pro` は**お名前.comで取得**し、**DNS は Cloudflare**で管理しています
+（お名前.com 側でネームサーバーを Cloudflare のものに変更）。
+移管はしていないため、更新はお名前.comで行います。
+
+### サブディレクトリで公開する場合
+
+GitHub Pages のプロジェクトページのように `/xxx/` 配下で配信するときは、
+ビルド時に `NEXT_PUBLIC_BASE_PATH` を渡します。
 
 ```bash
 NEXT_PUBLIC_BASE_PATH=/cocodesign-qr NEXT_PUBLIC_SITE_URL=https://kondo-git26.github.io/cocodesign-qr npm run build
 ```
 
-そのうえで `out/` の中身を `gh-pages` ブランチへ push します（`.nojekyll` を必ず含めること。
-これが無いと `_next/` ディレクトリが Jekyll に無視されて CSS・JS が 404 になります）。
+内部リンクは `internalHref()`（`src/lib/content/site.ts`）を通しているため、
+これだけで全ページのリンク・canonical・OGP が追随します。
 
-### ルート直下で公開する場合
-
-独自ドメインや Netlify などルート直下で公開するときは `NEXT_PUBLIC_BASE_PATH` を付けずにビルドします。
-`basePath` が空になり、内部リンクもそのまま動きます。
-
-> **Netlify について**：以前 <https://cocodesign-qr.netlify.app/> でも公開していましたが、
-> 無料プランのクレジットを使い切ったため本番デプロイが停止しています。
-> 設定（`netlify.toml`）は残してあるので、クレジット回復後はそのまま使えます。
+> **過去の公開先**：Netlify（無料プランのクレジット切れで本番デプロイ停止）、
+> GitHub Pages（`gh-pages` ブランチ・サブパス配信）。設定はどちらも残してあります。
 
 ---
 
