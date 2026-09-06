@@ -44,6 +44,7 @@ export function Stage({
   onDrop,
   onAnimationEnd,
 }: StageProps) {
+  const idle = phase === 'idle';
   const showResult = (phase === 'developing' || phase === 'ready') && modules !== null;
   const afterAnimation =
     phase === 'developing' ? (beforeSrc ? 'animate-wipe-in' : 'animate-fade-in') : '';
@@ -54,19 +55,32 @@ export function Stage({
       onDragLeave={onDragLeave}
       onDrop={onDrop}
       className={[
-        'relative flex min-h-[300px] items-center justify-center rounded-sm border transition-colors sm:min-h-[360px]',
-        dragging
-          ? 'border-shu bg-kinari/30'
-          : phase === 'idle'
-            ? 'border-dashed border-sumi-300 bg-sumi-50/70'
-            : 'border-sumi-200 bg-paper',
+        'group relative flex min-h-[300px] items-center justify-center rounded-sm border transition-colors duration-300 sm:min-h-[360px]',
+        // 枠線は待機中は見せない（トレイのくぼみが境界を示す）。ドラッグ中だけ朱で応える
+        dragging ? 'border-shu' : idle ? 'border-transparent' : 'border-sumi-200',
+        // 置いたあとは白い紙に戻り、その上に QR が乗る
+        idle ? '' : dragging ? 'bg-kinari/30' : 'bg-paper',
       ].join(' ')}
     >
-      {phase === 'idle' && (
+      {/*
+        生成りのトレイ。待機中だけ見え、置いた瞬間に紙へ溶ける。
+        内側の影は背景の上・子要素の下に描かれるため、グラデーションと同じ層に置いている。
+        ホバーとドラッグ中は色を変えず、トレイが少し沈む。
+      */}
+      <div
+        aria-hidden="true"
+        className={[
+          'pointer-events-none absolute inset-0 rounded-sm bg-tray transition-[opacity,box-shadow] duration-300',
+          idle ? 'opacity-100' : 'opacity-0',
+          dragging ? 'shadow-tray-deep' : 'shadow-tray group-hover:shadow-tray-deep',
+        ].join(' ')}
+      />
+
+      {idle && (
         <button
           type="button"
           onClick={onActivate}
-          className="absolute inset-0 flex items-center justify-center rounded-sm px-6 text-center text-lg font-medium tracking-japanese text-ink transition-colors hover:bg-sumi-100/60 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shu sm:text-xl"
+          className="absolute inset-0 flex items-center justify-center rounded-sm px-6 text-center text-lg font-medium tracking-japanese text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shu sm:text-xl"
         >
           {hint}
         </button>

@@ -31,7 +31,7 @@ export function ContentLine({
         type="text"
         value={value}
         onChange={(event) => onChange(event.target.value)}
-        placeholder="https://"
+        placeholder="URL または テキスト"
         maxLength={500}
         autoComplete="off"
         autoCapitalize="off"

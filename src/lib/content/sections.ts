@@ -11,7 +11,7 @@ export const FEATURES: FeatureItem[] = [
   {
     no: '01',
     title: '低解像度QR対応',
-    body: '小さく粗い支給QR画像を解析し、正方形セル単位で再構築します。にじんだ輪郭をなぞるのではなく、モジュールの並びとして読み直します。',
+    body: '小さく粗い支給QRコードを解析し、正方形セル単位で再構築します。にじんだ輪郭をなぞるのではなく、モジュールの並びとして読み直します。',
     icon: 'scan',
   },
   {
@@ -72,7 +72,7 @@ export interface StepItem {
 export const STEPS: StepItem[] = [
   {
     no: '1',
-    title: 'QR画像をアップロード',
+    title: 'QRコードをアップロード',
     body: 'JPG・PNG・PDFに対応。ドラッグ&ドロップでもファイル選択でも構いません。',
     icon: 'upload',
   },

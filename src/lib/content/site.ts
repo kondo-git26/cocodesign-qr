@@ -30,7 +30,7 @@ export const SITE = {
   serviceName: '印刷用QRコード変換',
   title: '印刷用QRコード変換｜K100ベクターPDF・SVG生成',
   description:
-    'クライアント支給の低解像度QR画像を、元のドット配置をできるだけ維持したまま解析。印刷用データとして使えるK100のPDF・SVG・PNGへ変換します。印刷会社・DTPオペレーター・デザイナー向け。',
+    'クライアント支給の低解像度のQRコードを、元のドット配置をできるだけ維持したまま解析。印刷用データとして使えるK100のPDF・SVG・PNGへ変換します。印刷会社・DTPオペレーター・デザイナー向け。',
   tagline: '毎日の5分を30秒に。',
   contactEmail: 'info@cocodesign.example.jp',
 } as const;

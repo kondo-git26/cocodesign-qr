@@ -42,7 +42,7 @@ export function Samples() {
               content={SAMPLE_CONTENT}
               pixelsPerModule={1.5}
               className="h-auto w-full"
-              alt="変換前：低解像度のQR画像"
+              alt="変換前：低解像度のQRコード"
             />
           </div>
           <dl className="mt-4 space-y-1 font-mono text-2xs">

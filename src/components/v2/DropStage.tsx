@@ -346,7 +346,7 @@ export function DropStage() {
   // 端末が確定するまでは端末に依存しない文言を出す（静的HTMLとの食い違いを避ける）
   const hint =
     coarsePointer === null
-      ? 'QR画像を置く'
+      ? 'QRコードを置く'
       : coarsePointer
         ? 'タップして画像を選ぶ'
         : `${isMac ? '⌘V' : 'Ctrl+V'} または ドロップ`;
@@ -370,7 +370,9 @@ export function DropStage() {
           id="v2-heading"
           className="text-center text-[1.375rem] font-bold leading-snug tracking-japanese text-ink sm:text-2xl md:text-[1.75rem]"
         >
-          QR画像を置くだけで、印刷用のK100ベクターに。
+          {/* 狭い画面では読点で折り返す（「ベクタ／ーに」のような単語途中の改行を避ける） */}
+          <span className="inline-block">QRコードを、</span>
+          <span className="inline-block">印刷用のK100ベクターに。</span>
         </h1>
 
         <div className="mt-8 md:mt-10">

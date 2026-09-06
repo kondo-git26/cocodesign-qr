@@ -153,7 +153,7 @@ npx vercel --prod
 | --- | --- |
 | PDFファイルの入力 | 未対応。QR部分をJPG/PNGに書き出してもらうメッセージを出します |
 | 一括変換（100枚単位） | 未実装。料金セクションで「検討中」と表示 |
-| 登録・ログイン（SVG/PNGの取り出し、履歴） | 未実装。v2 では「登録後に受け取れます」と表示のみ |
+| 登録・ログイン（SVG/PNGの取り出し、履歴） | 未実装。トップでは「SVG・PNGは登録後に受け取れます」と表示のみ |
 | 型番16以上（81セル角以上）の元配置復元 | 読み取りはできますが、配置の確定は行わず再生成になります |
 
 ### 「元のドット配置を維持」の実現方法
@@ -247,14 +247,14 @@ src/
 │   ├── globals.css / icon.svg / robots.ts / sitemap.ts
 ├── components/
 │   ├── layout/               … SiteHeader（本サイト）、Header（/v1/ 用・ナビ付き）、Footer
-│   ├── sections/             … 現行版の各セクション（v2 でも FV 以下で再利用）
-│   ├── converter/            … 現行版の変換フォームの部品
+│   ├── sections/             … トップと /v1/ で共通の各セクション（特長・使い方・料金など）
+│   ├── converter/            … /v1/ の変換フォームの部品
 │   ├── v2/                   … ファーストビュー（置く→鮮明になる→受け取る）
 │   │   ├── DropStage.tsx     … 状態管理（置く / 貼る / 打つ → 読み取り → 受け取る）
 │   │   ├── Stage.tsx         … 置く場所であり結果が現れる場所（ワイプ演出）
 │   │   ├── ContentLine.tsx   … 「QRの中身」の1行（表示 兼 入力）
 │   │   ├── ResultActions.tsx … ラベル・受け取るボタン・詳細
-│   │   ├── V2Header.tsx / sampleFile.ts
+│   │   └── sampleFile.ts     … 「試してみる →」で使うサンプル画像
 │   └── ui/                   … Section / Button / QR描画 / ページ共通枠
 └── lib/
     ├── qr/                   … encoder / decode / render / png
@@ -270,7 +270,7 @@ src/
 
 - 「本文へスキップ」リンクを設置
 - FAQ・詳細は `details` / `summary`（JavaScriptなしで開閉、キーボード対応）
-- v2 のドロップ領域は、外枠ではなく中の本物の `<button>` で操作します（外枠を `role="button"` にすると
+- トップのドロップ領域は、外枠ではなく中の本物の `<button>` で操作します（外枠を `role="button"` にすると
   中の画像やエラー文が支援技術から読めなくなるため）。状態変化は `aria-live` で通知します
 - ボタン・フォーム部品に `aria-label` / `aria-describedby` / `role="alert"` を設定
 - フォーカスリングを明示（朱色・2px）、`prefers-reduced-motion` に対応

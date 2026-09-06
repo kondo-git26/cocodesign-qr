@@ -74,6 +74,15 @@ module.exports = {
         // 影は「浮き」ではなく「面の境界」を示す目的だけに使う
         edge: '0 1px 0 0 #E9E9E5',
         panel: '0 1px 2px 0 rgba(17,17,17,0.06)',
+        // 置き場：紙にくぼみを付けたトレイ。上辺の影で「ここに置く」を示す
+        tray: 'inset 0 2px 6px rgba(70,58,20,0.16), inset 0 -1px 0 rgba(255,255,255,0.8)',
+        // ホバー・ドラッグ中：トレイが少し沈む
+        'tray-deep': 'inset 0 3px 10px rgba(70,58,20,0.24), inset 0 -1px 0 rgba(255,255,255,0.8)',
+      },
+      backgroundImage: {
+        // 生成りのトレイ。上が少し濃く、下へ向かって紙の白に近づく。
+        // グラデーションはこの置き場だけに使う（DESIGN.md §3）
+        tray: 'linear-gradient(180deg, #EDE3C2 0%, #F6F0D9 30%, #F9F5E7 100%)',
       },
       keyframes: {
         'module-in': {
