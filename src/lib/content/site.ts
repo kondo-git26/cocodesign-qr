@@ -28,11 +28,40 @@ export function absoluteUrl(path: string): string {
 export const SITE = {
   name: 'ココデザイン',
   serviceName: '印刷用QRコード変換',
-  title: '印刷用QRコード変換｜K100ベクターPDF・SVG生成',
+  title: '印刷用QRコード変換｜K100ベクターPDF',
   description:
-    'クライアント支給の低解像度のQRコードを、元のドット配置をできるだけ維持したまま解析。印刷用データとして使えるK100のPDF・SVG・PNGへ変換します。印刷会社・DTPオペレーター・デザイナー向け。',
+    'クライアント支給の低解像度のQRコードを、元のドット配置をできるだけ維持したまま解析し、印刷用のK100ベクターPDFへ変換します。無料・登録不要。本ツールで扱えないデータは有料の変換代行でお受けします。印刷会社・DTPオペレーター・デザイナー向け。',
   tagline: '毎日の5分を30秒に。',
-  contactEmail: 'info@cocodesign.example.jp',
+  contactEmail: 'info@cocodesign.pro',
+} as const;
+
+/**
+ * 販売業者の情報。特定商取引法に基づく表記と利用規約で使います。
+ * 登記上の商号・所在地をそのまま記載します（Stripe の審査は登記と一致している必要があります）。
+ */
+export const BUSINESS = {
+  company: '合同会社大須メディアクォータ',
+  manager: '近藤揮郎',
+  postalCode: '460-0011',
+  address: '愛知県名古屋市中区大須4-2-7',
+  tel: '052-249-9984',
+} as const;
+
+/** 有料で提供する変換代行。価格を変えるときはここだけ直します。 */
+export const AGENCY = {
+  name: 'QRコード変換代行',
+  price: '5,500円',
+  priceNote: '1件あたり・税込',
+} as const;
+
+/** 有料で提供するCSVからの一括作成。価格を変えるときはここだけ直します。 */
+export const BULK = {
+  name: 'CSVからのQRコード一括作成',
+  priceSmall: '2,200円',
+  priceLarge: '3,300円',
+  rowsSmall: '50行以内',
+  rowsLarge: '100行以内',
+  overNote: '101行以上は行数に応じて別途お見積もりします。',
 } as const;
 
 export const NAV_LINKS = [
@@ -45,6 +74,7 @@ export const NAV_LINKS = [
 
 export const FOOTER_LINKS = [
   { href: internalHref('/terms/'), label: '利用規約' },
+  { href: internalHref('/tokushoho/'), label: '特定商取引法に基づく表記' },
   { href: internalHref('/privacy/'), label: 'プライバシーポリシー' },
   { href: internalHref('/contact/'), label: 'お問い合わせ' },
 ] as const;

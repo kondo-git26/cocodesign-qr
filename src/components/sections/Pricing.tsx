@@ -12,7 +12,7 @@ export function Pricing() {
       index="08"
       eyebrow="PRICING"
       title="料金"
-      lead="まず無料で試せます。有料プランは内容と価格を検討中で、正式決定ではありません。"
+      lead="無料の変換は登録なしでそのままお使いいただけます。本ツールで扱えない支給データの変換代行と、CSVからの一括作成を有料でお受けします。"
     >
       <ul className="grid gap-px border border-sumi-200 bg-sumi-200 md:grid-cols-3">
         {PRICING_PLANS.map((plan) => (
@@ -20,10 +20,10 @@ export function Pricing() {
             key={plan.name}
             className={`flex flex-col bg-paper p-6 md:p-7 ${plan.emphasis ? 'border-t-2 border-t-ink' : ''}`}
           >
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3">
               <h3 className="text-base font-bold tracking-japanese text-ink">{plan.name}</h3>
               <span
-                className={`border px-2 py-0.5 font-mono text-2xs ${
+                className={`shrink-0 border px-2 py-0.5 font-mono text-2xs ${
                   plan.emphasis
                     ? 'border-aomidori text-aomidori'
                     : 'border-sumi-300 text-sumi-500'
@@ -45,23 +45,34 @@ export function Pricing() {
               ))}
             </ul>
 
-            {plan.emphasis ? (
-              <ButtonLink href="#convert" variant="primary" className="mt-6 w-full">
-                無料で試す
-              </ButtonLink>
-            ) : (
-              <ButtonLink href={internalHref('/contact/')} variant="secondary" className="mt-6 w-full">
-                要望を伝える
-              </ButtonLink>
-            )}
+            <ButtonLink
+              href={plan.emphasis ? '#qr' : internalHref('/contact/')}
+              variant={plan.emphasis ? 'primary' : 'secondary'}
+              className="mt-6 w-full"
+            >
+              {plan.ctaLabel}
+            </ButtonLink>
           </li>
         ))}
       </ul>
 
-      <p className="mt-6 border border-sumi-200 bg-kinari/40 px-4 py-3 text-2xs leading-5 text-sumi-600">
-        記載の料金はいずれも予定・検討中の内容です。正式決定ではありません。
-        必要な運用（枚数、サイズ、納品形式など）があればお問い合わせからお知らせください。
-      </p>
+      <div className="mt-6 space-y-2 border border-sumi-200 bg-kinari/40 px-4 py-3 text-2xs leading-5 text-sumi-600">
+        <p>
+          有料の2つは、先に内容を確認して、お受けできるかをお返しします。
+          お受けできる場合にかぎり、お支払いのご案内をお送りします。
+          変換代行で読み取れずに納品できない場合は、お支払いいただいた全額をお返しします。
+        </p>
+        <p>
+          支払方法・納品時期・キャンセルの条件は
+          <a
+            href={internalHref('/tokushoho/')}
+            className="text-ink underline underline-offset-4"
+          >
+            特定商取引法に基づく表記
+          </a>
+          に記載しています。
+        </p>
+      </div>
     </Section>
   );
 }

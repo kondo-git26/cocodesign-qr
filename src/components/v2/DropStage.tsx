@@ -359,7 +359,7 @@ export function DropStage() {
         : '';
 
   return (
-    <section aria-labelledby="v2-heading" className="relative overflow-hidden bg-paper">
+    <section id="qr" aria-labelledby="v2-heading" className="relative overflow-hidden bg-paper">
       <div
         aria-hidden="true"
         className="grid-paper grid-paper-fade pointer-events-none absolute inset-0 opacity-70"

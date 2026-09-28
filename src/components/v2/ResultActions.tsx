@@ -85,7 +85,7 @@ export function ResultActions({
           受け取る
           <span className="font-mono text-2xs font-normal text-sumi-300">PDF · K100</span>
         </button>
-        <p className="text-2xs text-sumi-500">SVG・PNGは登録後に受け取れます</p>
+        <p className="text-2xs text-sumi-500">SVG・PNGは準備中です</p>
       </div>
 
       <div className="mt-3 flex items-center gap-3">
