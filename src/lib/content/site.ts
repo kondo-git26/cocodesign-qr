@@ -64,6 +64,20 @@ export const BULK = {
   overNote: '101行以上は行数に応じて別途お見積もりします。',
 } as const;
 
+/**
+ * 一般の方向けの「ネット印刷おたすけ」。価格を変えるときはここだけ直します。
+ * 価格は仮（2026-11-03 決定）。3件ほど受けてから見直します。
+ */
+export const PRINT_HELP = {
+  name: 'ネット印刷おたすけ',
+  bleedName: '塗り足しを付ける',
+  bleedPrice: '1,100円',
+  bleedUnit: '1面あたり・税込',
+  orderName: '入稿のお手伝い',
+  orderPrice: '3,300円から',
+  orderUnit: '1注文あたり・税込',
+} as const;
+
 export const NAV_LINKS = [
   { href: '#features', label: '特長' },
   { href: '#howto', label: '使い方' },
@@ -73,6 +87,7 @@ export const NAV_LINKS = [
 ] as const;
 
 export const FOOTER_LINKS = [
+  { href: internalHref('/print/'), label: 'ネット印刷おたすけ' },
   { href: internalHref('/terms/'), label: '利用規約' },
   { href: internalHref('/tokushoho/'), label: '特定商取引法に基づく表記' },
   { href: internalHref('/privacy/'), label: 'プライバシーポリシー' },

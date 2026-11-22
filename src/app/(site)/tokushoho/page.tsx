@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import { Clause, PageShell } from '@/components/ui/PageShell';
-import { absoluteUrl, AGENCY, BULK, BUSINESS, internalHref, SITE } from '@/lib/content/site';
+import { absoluteUrl, AGENCY, BULK, BUSINESS, internalHref, PRINT_HELP, SITE } from '@/lib/content/site';
 
 export const metadata: Metadata = {
   title: '特定商取引法に基づく表記',
@@ -23,8 +23,8 @@ export default function TokushohoPage() {
   return (
     <PageShell
       title="特定商取引法に基づく表記"
-      lead={`${SITE.name}が提供する有料サービス「${AGENCY.name}」および「${BULK.name}」についての表記です。無料でお使いいただける変換ツールは、この表記の対象外です。`}
-      updatedAt="2026年9月29日"
+      lead={`${SITE.name}が提供する有料サービス「${AGENCY.name}」「${BULK.name}」および「${PRINT_HELP.name}」についての表記です。無料でお使いいただけるツールは、この表記の対象外です。`}
+      updatedAt="2026年11月22日"
     >
       <dl className="mb-4">
         <Row label="販売業者">{BUSINESS.company}</Row>
@@ -73,6 +73,19 @@ export default function TokushohoPage() {
           CSVの1行につきQRコードを1つ作成します。記載された内容をそのままQRコードにしますので、
           内容の正しさはお客様にてご確認ください。
         </p>
+        <p className="pt-2">
+          <strong className="font-bold text-ink">{PRINT_HELP.name}</strong>
+          <br />
+          {PRINT_HELP.bleedName}　{PRINT_HELP.bleedPrice}（{PRINT_HELP.bleedUnit}）
+          <br />
+          {PRINT_HELP.orderName}　{PRINT_HELP.orderPrice}（{PRINT_HELP.orderUnit}）
+        </p>
+        <p>
+          「{PRINT_HELP.bleedName}」は、印刷物の片面を1面として数えます。
+          「{PRINT_HELP.orderName}」は、印刷会社への1回の注文を1注文として数えます。
+          データの直しが多く 3,300円を超える場合は、作業に入る前に金額をお伝えし、ご了承をいただいてから進めます。
+          印刷代は含みません。印刷代は、お客様から印刷会社へ直接お支払いください。
+        </p>
       </Clause>
 
       <Clause heading="商品代金以外に必要な料金">
@@ -84,11 +97,14 @@ export default function TokushohoPage() {
 
       <Clause heading="お支払い方法とお支払い時期">
         <p>
-          クレジットカードでお支払いいただきます。当社からお送りするお支払い用のリンクからお手続きください。
-          決済は Stripe（ストライプ）を通じて行います。当社がカード番号を受け取ることはありません。
+          銀行振込でお支払いいただきます。当社から請求書（PDF）をメールでお送りしますので、
+          請求書に記載の口座へお振込みください。クレジットカードでのお支払いは準備中です。
         </p>
         <p>
-          お支払いは、お受けできることをお返ししたあと、作業に入る前にお願いしています。
+          {AGENCY.name}・{BULK.name}：お受けできることをお返ししたあと、作業に入る前にお振込みをお願いしています。
+        </p>
+        <p>
+          {PRINT_HELP.name}：納品のときに請求書をお送りします。請求書の日付から7日以内にお振込みください。
         </p>
       </Clause>
 
@@ -97,7 +113,7 @@ export default function TokushohoPage() {
           {[
             'お問い合わせから、支給データまたはCSVファイルと、ご希望のサイズ・余白・形式・納期をお送りいただきます。',
             '内容を確認し、お受けできるかどうかを原則1営業日以内にお返しします。',
-            'お受けできる場合にかぎり、お支払い用のリンクをお送りします。',
+            'お受けできる場合にかぎり、請求書（PDF）をお送りします。',
             'ご入金を確認したのち、原則として翌営業日までにメールで納品します。一括作成はZIPファイルにまとめてお渡しします。',
           ].map((step, index) => (
             <li key={step} className="flex gap-3">
@@ -111,6 +127,13 @@ export default function TokushohoPage() {
         <p>
           支給データの状態や件数によっては、これより日数をいただく場合があります。その場合は事前にお知らせします。
         </p>
+        <p className="pt-2">
+          {PRINT_HELP.name}は、メールでデータと仕上がりの大きさをお送りいただき、
+          お受けできるかどうかと金額を原則1営業日以内にお返しします。
+          「{PRINT_HELP.bleedName}」は、お受けしてから2営業日以内をめやすにメールで納品します。
+          「{PRINT_HELP.orderName}」は、ご相談のうえ決めた日時に行います。
+          いずれも、お返しできる日はお受けするときにお伝えします。
+        </p>
       </Clause>
 
       <Clause heading="お受けできない場合">
@@ -122,6 +145,10 @@ export default function TokushohoPage() {
         <p>
           QRコードの中身を決めること、デザインそのものの制作や修正は、本サービスには含まれません。
         </p>
+        <p>
+          {PRINT_HELP.name}では、印刷代のお預かり・立て替え、印刷会社のサイトのIDやパスワードのお預かりはしていません。
+          印刷会社の入稿の決まりに合わせてデータを整えるところまでが範囲で、印刷の色の出方を保証するものではありません。
+        </p>
       </Clause>
 
       <Clause heading="キャンセル・返金について">
@@ -131,6 +158,10 @@ export default function TokushohoPage() {
         <p>
           お支払いのあと作業に入る前であれば、お申し出により全額をお返しします。
           また、変換代行において支給データから内容を復元できず、納品できなかった場合も全額をお返しします。
+        </p>
+        <p>
+          {PRINT_HELP.name}は、当社が作業に入る前であれば、費用なしでキャンセルできます。
+          作業に入ったあとのキャンセルは、そこまでの作業分をご相談のうえご請求する場合があります。
         </p>
         <p>
           納品したデータに当社の作業による誤りがあった場合は、無償でお直しします。
