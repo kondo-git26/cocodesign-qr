@@ -77,11 +77,16 @@ export default function TokushohoPage() {
           <strong className="font-bold text-ink">{PRINT_HELP.name}</strong>
           <br />
           {PRINT_HELP.bleedName}　{PRINT_HELP.bleedPrice}（{PRINT_HELP.bleedUnit}）
+          {PRINT_HELP.bleedTiers.map((tier) => (
+            <span key={tier.name} className="block pl-4">
+              {tier.name}：{tier.price}（{tier.body}）
+            </span>
+          ))}
           <br />
           {PRINT_HELP.orderName}　{PRINT_HELP.orderPrice}（{PRINT_HELP.orderUnit}）
         </p>
         <p>
-          「{PRINT_HELP.bleedName}」は、印刷物の片面を1面として数えます。
+          「{PRINT_HELP.bleedName}」は、印刷物の片面を1面として数えます。どちらの金額になるかは、データを見て作業に入る前にお伝えします。
           「{PRINT_HELP.orderName}」は、印刷会社への1回の注文を1注文として数えます。
           データの直しが多く 3,300円を超える場合は、作業に入る前に金額をお伝えし、ご了承をいただいてから進めます。
           印刷代は含みません。印刷代は、お客様から印刷会社へ直接お支払いください。

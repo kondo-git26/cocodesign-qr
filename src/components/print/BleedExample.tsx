@@ -140,21 +140,21 @@ export function BleedExample() {
                 <div className="mt-2 bg-sumi-50">
                   <DataFigure id={`${col.id}-data`} bleed={col.bleed} />
                 </div>
-                <p className="mt-2 text-xs leading-6 text-sumi-600">{col.data}</p>
+                <p className="mt-2 text-sm leading-6 text-sumi-700">{col.data}</p>
               </div>
               <div>
                 <p className="spec-label">切ったあと</p>
                 <div className="mt-2 bg-sumi-50">
                   <CutFigure id={`${col.id}-cut`} bleed={col.bleed} />
                 </div>
-                <p className="mt-2 text-xs leading-6 text-sumi-600">{col.cut}</p>
+                <p className="mt-2 text-sm leading-6 text-sumi-700">{col.cut}</p>
               </div>
             </div>
             <p className={`mt-4 text-sm font-bold ${col.tone}`}>→ {col.verdict}</p>
           </div>
         ))}
       </div>
-      <figcaption className="mt-3 text-xs leading-6 text-sumi-500">
+      <figcaption className="mt-3 text-sm leading-7 text-sumi-600">
         朱色の点線が、印刷会社が紙を切るところです。分かりやすくするため、塗り足しの幅と刃のずれは実際より太く描いています。
       </figcaption>
     </figure>

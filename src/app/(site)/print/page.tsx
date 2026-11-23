@@ -4,6 +4,7 @@ import { Mail } from 'lucide-react';
 import { BleedExample } from '@/components/print/BleedExample';
 import { BleedTool } from '@/components/print/BleedTool';
 import { ButtonLink } from '@/components/ui/Button';
+import { ConsultBox } from '@/components/ui/ConsultBox';
 import { absoluteUrl, internalHref, PRINT_HELP, SITE } from '@/lib/content/site';
 
 export const metadata: Metadata = {
@@ -16,13 +17,23 @@ export const metadata: Metadata = {
 const MAIL_HREF = `mailto:${SITE.contactEmail}?subject=${encodeURIComponent(`${PRINT_HELP.name}の相談`)}`;
 
 /** 3つのメニュー。価格は site.ts の PRINT_HELP から取ります。 */
-const MENU = [
+type MenuItem = {
+  name: string;
+  price: string;
+  unit: string;
+  body: string;
+  tiers?: readonly { name: string; price: string; body: string }[];
+  foot: string;
+};
+
+const MENU: MenuItem[] = [
   {
     name: PRINT_HELP.bleedName,
     price: PRINT_HELP.bleedPrice,
     unit: PRINT_HELP.bleedUnit,
     body: '仕上がりサイズで作ったデータに、塗り足し3mmを付けてお返しします。ふちに人や文字、ぼかしがある絵も、人が見て自然に足します。',
-    foot: '表と裏があるものは2面です。',
+    tiers: PRINT_HELP.bleedTiers,
+    foot: 'どちらになるかは、データを見て作業の前にお伝えします。表と裏があるものは2面です。',
   },
   {
     name: PRINT_HELP.orderName,
@@ -37,6 +48,22 @@ const MENU = [
     unit: '登録なし',
     body: 'このページの下にあるツールで、画像に塗り足し3mmを付けられます。ふちが単色の絵や、模様の絵に向いています。',
     foot: '画像はお使いのブラウザの中だけで処理します。',
+  },
+];
+
+/** 冒頭に出す、有料の2つ（値段と一言だけ）。くわしい説明は下の MENU に書きます。 */
+const PAID = [
+  {
+    name: PRINT_HELP.bleedName,
+    price: PRINT_HELP.bleedPrice,
+    unit: '1面・税込',
+    short: 'いまのデータに、塗り足し3mmを付けてお返しします。ふちに人や文字がかかっていて描き足しが要る絵は、1面3,300円です。',
+  },
+  {
+    name: PRINT_HELP.orderName,
+    price: PRINT_HELP.orderPrice,
+    unit: '1注文・税込',
+    short: 'データを確かめて直し、注文画面も横についてご案内します。',
   },
 ];
 
@@ -77,16 +104,52 @@ export default function PrintPage() {
           <span className="inline-block">そこから先を</span>
           <span className="inline-block">手伝います。</span>
         </h1>
-        <p className="mt-5 max-w-2xl text-sm leading-7 text-sumi-600">
+        <p className="mt-5 max-w-2xl text-base leading-8 text-sumi-700">
           チラシや名刺をネット印刷に出そうとして、「塗り足しが足りません」「データに不備があります」と言われて止まっていませんか。
-          足りないところを直して、印刷会社へ送れる形にしてお返しします。名古屋・大須で、ガイドブックやリーフレットの印刷データを作っている者がお受けします。
+          足りないところを直して、印刷会社へ送れる形にしてお返しします。
         </p>
 
-        <section aria-labelledby="what-heading" className="mt-12">
+        {/* まず「頼める・いくら・どう頼む」。困って来た人が、解説を読み終える前に動けるように */}
+        <section
+          aria-labelledby="start-heading"
+          className="mt-8 grid gap-6 border-t-2 border-ink pt-6 md:mt-10 md:grid-cols-2 md:gap-10 md:pt-8"
+        >
+          <div>
+            <h2 id="start-heading" className="text-base font-bold tracking-japanese text-ink">
+              頼めること
+            </h2>
+            <dl className="mt-3 border-t border-sumi-200">
+              {PAID.map((item) => (
+                <div key={item.name} className="border-b border-sumi-200 py-3">
+                  <div className="flex flex-wrap items-baseline justify-between gap-x-4">
+                    <dt className="whitespace-nowrap text-base font-bold tracking-japanese text-ink">
+                      {item.name}
+                    </dt>
+                    <dd className="shrink-0 text-right">
+                      <span className="text-xl font-bold text-ink">{item.price}</span>
+                      <span className="ml-2 text-xs text-sumi-600">{item.unit}</span>
+                    </dd>
+                  </div>
+                  <p className="mt-1 text-sm leading-7 text-sumi-700">{item.short}</p>
+                </div>
+              ))}
+            </dl>
+            <p className="mt-3 text-sm leading-7 text-sumi-600">
+              自分で付けられる
+              <a href="#tool-heading" className="text-ink underline underline-offset-4">
+                無料のツール
+              </a>
+              も、このページの下にあります。
+            </p>
+          </div>
+          <ConsultBox subject={`${PRINT_HELP.name}の相談`} className="self-start" />
+        </section>
+
+        <section aria-labelledby="what-heading" className="mt-14">
           <h2 id="what-heading" className="text-base font-bold tracking-japanese text-ink">
             「塗り足しが足りません」とは
           </h2>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-sumi-600">
+          <p className="mt-3 max-w-2xl text-base leading-8 text-sumi-700">
             印刷会社は、大きな紙にまとめて刷ってから切ります。切る刃は少しずれることがあるので、色や写真は切るところより3mm外まで伸ばしておく決まりです。これが「塗り足し」です。
           </p>
           <div className="mt-5">
@@ -101,13 +164,26 @@ export default function PrintPage() {
           <div className="mt-4 grid gap-px border border-sumi-300 bg-sumi-300 md:grid-cols-3">
             {MENU.map((item) => (
               <div key={item.name} className="flex flex-col bg-paper p-5 sm:p-6">
-                <h3 className="text-sm font-bold tracking-japanese text-ink">{item.name}</h3>
+                <h3 className="text-base font-bold tracking-japanese text-ink">{item.name}</h3>
                 <p className="mt-3 flex flex-wrap items-baseline gap-x-2">
                   <span className="text-2xl font-bold text-ink">{item.price}</span>
                   <span className="text-xs text-sumi-600">{item.unit}</span>
                 </p>
-                <p className="mt-4 text-sm leading-7 text-sumi-600">{item.body}</p>
-                <p className="mt-auto pt-4 text-xs leading-6 text-sumi-500">{item.foot}</p>
+                <p className="mt-4 text-base leading-8 text-sumi-700">{item.body}</p>
+                {item.tiers && (
+                  <dl className="mt-4 border-t border-sumi-200">
+                    {item.tiers.map((tier) => (
+                      <div key={tier.name} className="border-b border-sumi-200 py-2.5">
+                        <div className="flex items-baseline justify-between gap-3">
+                          <dt className="text-sm font-bold text-ink">{tier.name}</dt>
+                          <dd className="shrink-0 text-base font-bold text-ink">{tier.price}</dd>
+                        </div>
+                        <p className="mt-0.5 text-sm leading-6 text-sumi-600">{tier.body}</p>
+                      </div>
+                    ))}
+                  </dl>
+                )}
+                <p className="mt-auto pt-4 text-sm leading-7 text-sumi-600">{item.foot}</p>
               </div>
             ))}
           </div>
@@ -118,8 +194,8 @@ export default function PrintPage() {
             <h2 id="order-heading" className="text-base font-bold tracking-japanese text-ink">
               頼み方
             </h2>
-            <p className="mt-3 text-sm leading-7 text-sumi-600">次の4つを、メールでお送りください。</p>
-            <ul className="mt-3 space-y-2 text-sm leading-7 text-sumi-600">
+            <p className="mt-3 text-base leading-8 text-sumi-700">次の4つを、メールでお送りください。</p>
+            <ul className="mt-3 space-y-2 text-base leading-8 text-sumi-700">
               {SEND_ITEMS.map((item) => (
                 <li key={item} className="flex gap-2.5">
                   <Dot />
@@ -133,7 +209,7 @@ export default function PrintPage() {
                 メールで相談する
               </ButtonLink>
               <p className="mt-3 break-all font-mono text-sm text-ink">{SITE.contactEmail}</p>
-              <p className="mt-2 text-xs leading-6 text-sumi-500">
+              <p className="mt-2 text-sm leading-7 text-sumi-600">
                 「これは頼めるのか」だけのご相談でもかまいません。ご相談は無料です。
               </p>
             </div>
@@ -141,7 +217,7 @@ export default function PrintPage() {
 
           <div>
             <h2 className="text-base font-bold tracking-japanese text-ink">お返しするまで</h2>
-            <ol className="mt-3 space-y-3 text-sm leading-7 text-sumi-600">
+            <ol className="mt-3 space-y-3 text-base leading-8 text-sumi-700">
               {STEPS.map((step, index) => (
                 <li key={step} className="flex gap-3">
                   <span aria-hidden="true" className="shrink-0 pt-0.5 font-mono text-2xs text-sumi-500">
@@ -151,7 +227,7 @@ export default function PrintPage() {
                 </li>
               ))}
             </ol>
-            <p className="mt-4 text-xs leading-6 text-sumi-500">
+            <p className="mt-4 text-sm leading-7 text-sumi-600">
               いつお返しできるかは、お受けするときにお伝えします。塗り足しを付ける作業は、2営業日以内がめやすです。
               お支払い・キャンセルの条件は
               <a href={internalHref('/tokushoho/')} className="text-ink underline underline-offset-4">
@@ -167,10 +243,10 @@ export default function PrintPage() {
           <h2 id="tool-heading" className="mt-2 text-xl font-bold tracking-japanese text-ink md:text-2xl">
             自分で塗り足し3mmを付ける
           </h2>
-          <p className="mt-4 max-w-2xl text-sm leading-7 text-sumi-600">
+          <p className="mt-4 max-w-2xl text-base leading-8 text-sumi-700">
             仕上がりサイズで作った画像を置くと、ふちから3mm足してお返しします。画像はこのブラウザの中だけで処理され、外には送られません。
           </p>
-          <p className="mt-3 max-w-2xl text-sm leading-7 text-sumi-600">
+          <p className="mt-3 max-w-2xl text-base leading-8 text-sumi-700">
             いま扱えるのは PNG と JPEG の画像です。PDF のデータや、ふちに人や文字がある絵は、上の「{PRINT_HELP.bleedName}」（{PRINT_HELP.bleedPrice}）でお受けします。
           </p>
           <div className="mt-10">
@@ -182,7 +258,7 @@ export default function PrintPage() {
           <h2 id="not-heading" className="text-base font-bold tracking-japanese text-ink">
             お受けしていないこと
           </h2>
-          <ul className="mt-4 max-w-3xl space-y-2 text-sm leading-7 text-sumi-600">
+          <ul className="mt-4 max-w-3xl space-y-2 text-base leading-8 text-sumi-700">
             {NOT_DOING.map((item) => (
               <li key={item} className="flex gap-2.5">
                 <Dot />
@@ -190,7 +266,7 @@ export default function PrintPage() {
               </li>
             ))}
           </ul>
-          <p className="mt-6 text-xs leading-6 text-sumi-500">
+          <p className="mt-6 text-sm leading-7 text-sumi-600">
             運営：合同会社大須メディアクォータ（名古屋市中区大須）
           </p>
         </section>

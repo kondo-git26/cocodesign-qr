@@ -14,12 +14,16 @@ import {
   toPdfBlob,
   toPngBlob,
   type BleedMode,
+  type BleedModeChoice,
   type BleedResult,
 } from '@/lib/bleed/bleed';
 
 const MAX_UPLOAD_BYTES = 30 * 1024 * 1024;
 
-const MODES: { id: BleedMode; label: string; note: string }[] = [
+const MODE_LABEL: Record<BleedMode, string> = { extend: 'ふちを伸ばす', mirror: '鏡面で折り返す' };
+
+const MODES: { id: BleedModeChoice; label: string; note: string }[] = [
+  { id: 'auto', label: 'おまかせ', note: '絵のふちを見て、合う足し方をこちらで選びます' },
   { id: 'extend', label: 'ふちを伸ばす', note: 'べた塗りや、ふちが単色の絵に向いています' },
   { id: 'mirror', label: '鏡面で折り返す', note: 'ふちの内側を鏡のように写して足します。写真や模様の絵に向いています' },
 ];
@@ -45,7 +49,7 @@ export function BleedTool() {
   const [image, setImage] = useState<ImageBitmap | null>(null);
   const [paperId, setPaperId] = useState('a5');
   const [custom, setCustom] = useState({ w: '100', h: '100' });
-  const [mode, setMode] = useState<BleedMode>('extend');
+  const [mode, setMode] = useState<BleedModeChoice>('auto');
   const [result, setResult] = useState<BleedResult | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [dragging, setDragging] = useState(false);
@@ -248,6 +252,11 @@ export function BleedTool() {
                 <span>
                   <span className="block text-sm font-medium text-ink">{m.label}</span>
                   <span className="block text-xs leading-6 text-sumi-600">{m.note}</span>
+                  {m.id === 'auto' && mode === 'auto' && result && (
+                    <span className="block text-xs font-bold leading-6 text-ink">
+                      今回は「{MODE_LABEL[result.usedMode]}」で足しました
+                    </span>
+                  )}
                 </span>
               </label>
             ))}
