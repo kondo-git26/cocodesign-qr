@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 
+import { Analytics } from '@/components/Analytics';
 import { absoluteUrl, HOME, SITE, SITE_URL } from '@/lib/content/site';
 
 import './globals.css';
@@ -75,6 +76,9 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ja">
+      <head>
+        <Analytics />
+      </head>
       <body className="min-h-screen bg-paper font-sans text-ink">
         <a
           href="#main"

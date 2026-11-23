@@ -8,9 +8,9 @@ import { ConsultBox } from '@/components/ui/ConsultBox';
 import { absoluteUrl, internalHref, PRINT_HELP, SITE } from '@/lib/content/site';
 
 export const metadata: Metadata = {
-  title: `${PRINT_HELP.name}｜塗り足し・入稿のお手伝い`,
+  title: `塗り足し3mmを無料で付ける・入稿データの直し｜${PRINT_HELP.name}`,
   description:
-    'ネット印刷にチラシや名刺を出すとき、「塗り足しが足りません」と言われて止まった方へ。塗り足し3mmを付ける作業と、印刷会社へデータを送るまでのお手伝いを、1面1,100円からお受けします。自分で付けられる無料のツールもあります。',
+    'ネット印刷に出すとき「塗り足しが足りません」と言われた方へ。塗り足し3mmを無料で付けるツールと、入稿データの直し（1面1,100円から）、入稿のお手伝いをしています。Canva や AI で作ったチラシ・名刺、プリントパック・ラクスルなどへの PDF 入稿もご相談ください。',
   alternates: { canonical: absoluteUrl('/print/') },
 };
 
@@ -68,7 +68,7 @@ const PAID = [
 ];
 
 const SEND_ITEMS = [
-  '印刷したいデータ（PDF・画像・Canva やワードから書き出したもの）',
+  '印刷したいデータ（PDF・画像・Canva やワードから書き出したもの・AI で作った画像）',
   '仕上がりの大きさ（例：A4、名刺 91×55mm）',
   '頼みたい印刷会社（決まっていれば。まだなら一緒に選びます）',
   'いつまでに要るか',
@@ -106,7 +106,7 @@ export default function PrintPage() {
         </h1>
         <p className="mt-5 max-w-2xl text-base leading-8 text-sumi-700">
           チラシや名刺をネット印刷に出そうとして、「塗り足しが足りません」「データに不備があります」と言われて止まっていませんか。
-          足りないところを直して、印刷会社へ送れる形にしてお返しします。
+          足りないところを直して、印刷会社へ送れる形にしてお返しします。ChatGPT や Canva の AI で作った絵も、お受けします。
         </p>
 
         {/* まず無料ツール。かんたんなものは、ここで自分で済ませてもらう（2026-11-24 近藤さん） */}

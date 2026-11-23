@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import { Clause, PageShell } from '@/components/ui/PageShell';
-import { absoluteUrl, AGENCY, BULK, BUSINESS, SITE } from '@/lib/content/site';
+import { absoluteUrl, AGENCY, ANALYTICS, BULK, BUSINESS, SITE } from '@/lib/content/site';
 
 export const metadata: Metadata = {
   title: 'プライバシーポリシー',
@@ -57,12 +57,28 @@ export default function PrivacyPage() {
       </Clause>
 
       <Clause heading="アクセス解析">
-        <p>
-          本サイトはアクセス解析を導入していません。外部のスクリプトおよびWebフォントも読み込んでいません。
-        </p>
-        <p>
-          今後導入する場合は、事業者名と取得する情報を本ページに明記したうえで開始します。
-        </p>
+        {ANALYTICS.ga4Id ? (
+          <>
+            <p>
+              本サイトは、サイトの使われ方を知り改善するために、Google LLC の「Google アナリティクス」を利用しています。
+              Google アナリティクスは Cookie を使い、見たページ、訪問の日時、おおよその地域、使っている端末やブラウザの種類などを、個人を特定しない形で集めます。
+            </p>
+            <p>
+              無料の変換ツールに置いた画像やファイル名は、Google アナリティクスにも送りません。
+              集めた情報の扱いは、Google のプライバシーポリシーに従います。
+              Google アナリティクスによる情報の収集を止めたい場合は、Google が提供する「Google アナリティクス オプトアウト アドオン」をご利用ください。
+            </p>
+          </>
+        ) : (
+          <>
+            <p>
+              本サイトはアクセス解析を導入していません。外部のスクリプトおよびWebフォントも読み込んでいません。
+            </p>
+            <p>
+              今後導入する場合は、事業者名と取得する情報を本ページに明記したうえで開始します。
+            </p>
+          </>
+        )}
       </Clause>
 
       <Clause heading="事業者・お問い合わせ先">

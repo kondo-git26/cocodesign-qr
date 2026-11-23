@@ -79,6 +79,12 @@ export const BULK = {
  * 一般の方向けの「ネット印刷おたすけ」。価格を変えるときはここだけ直します。
  * 価格は仮（2026-11-03 決定）。3件ほど受けてから見直します。
  */
+/** アクセス解析。ga4Id が空のあいだは、解析のスクリプトを読み込まない（プライバシーポリシーの記載もそれに合わせて切り替わる） */
+export const ANALYTICS = {
+  /** GA4 アカウント「ココデザイン」（kondow@gmail.com）・ストリーム cocodesign.pro。2026-11-24 作成 */
+  ga4Id: 'G-R6DCX2NE3N',
+} as const;
+
 export const PRINT_HELP = {
   name: 'ネット印刷おたすけ',
   bleedName: '塗り足しを付ける',
