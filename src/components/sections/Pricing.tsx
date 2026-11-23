@@ -5,11 +5,12 @@ import { Section } from '@/components/ui/Section';
 import { PRICING_PLANS } from '@/lib/content/sections';
 import { internalHref } from '@/lib/content/site';
 
-export function Pricing() {
+/** index：通し番号。/qr/ では 01 から振り直すため、ページ側から渡せるようにしています */
+export function Pricing({ index = '08' }: { index?: string } = {}) {
   return (
     <Section
       id="pricing"
-      index="08"
+      index={index}
       eyebrow="PRICING"
       title="料金"
       lead="無料の変換は登録なしでそのままお使いいただけます。本ツールで扱えない支給データの変換代行と、CSVからの一括作成を有料でお受けします。"

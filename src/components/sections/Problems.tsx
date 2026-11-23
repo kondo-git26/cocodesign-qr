@@ -3,10 +3,11 @@ import { ArrowRight } from 'lucide-react';
 import { Section } from '@/components/ui/Section';
 import { PROBLEMS } from '@/lib/content/sections';
 
-export function Problems() {
+/** index：通し番号。/qr/ では 01 から振り直すため、ページ側から渡せるようにしています */
+export function Problems({ index = '05' }: { index?: string } = {}) {
   return (
     <Section
-      index="05"
+      index={index}
       eyebrow="PROBLEMS"
       title="よくある困りごと"
       lead="現場で実際に起きていることと、それに対する当サービスの答えです。"

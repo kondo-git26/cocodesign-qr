@@ -23,7 +23,7 @@ export const FEATURES: FeatureItem[] = [
   {
     no: '03',
     title: 'Illustrator実務にそのまま',
-    body: 'PDF・SVGとして配置、編集、再利用しやすい形式で出力します。矩形パスだけで構成しているため、拡大・縮小しても輪郭が崩れません。',
+    body: 'PDFで出力します。Illustratorで開いても、配置しても使えます。矩形パスだけで構成しているため、拡大・縮小しても輪郭が崩れません。',
     icon: 'layers',
   },
 ];
@@ -48,7 +48,7 @@ export const PROBLEMS: ProblemItem[] = [
   {
     problem: 'Illustratorの画像トレースが面倒',
     solution: 'ベクター出力',
-    solutionNote: 'アップロードして形式を選ぶだけ。パス数も最小限にまとめます。',
+    solutionNote: '画像を置くだけ。パス数も最小限にまとめます。',
   },
   {
     problem: '再生成するとドット配置が変わる',
@@ -92,6 +92,31 @@ export const STEPS: StepItem[] = [
     no: '4',
     title: 'ダウンロード',
     body: 'そのままIllustratorに配置できます。印刷前に必ず実データでテストしてください。',
+    icon: 'download',
+  },
+];
+
+/**
+ * 現行の変換ページ（/qr/）の手順。設定は固定で選ぶものが無いため、3つです。
+ * 上の STEPS は、設定を選べた初版（/v1/）の手順として残しています。
+ */
+export const STEPS_DROP: StepItem[] = [
+  {
+    no: '1',
+    title: 'QRコードを置く',
+    body: 'JPG・PNG・WebPに対応。ドロップ、貼り付け（⌘V / Ctrl+V）、ファイル選択のどれでも構いません。URLや文字を入力して作ることもできます。',
+    icon: 'upload',
+  },
+  {
+    no: '2',
+    title: '読み取った内容を確かめる',
+    body: 'QRコードの下に、読み取った内容（URLなど）が出ます。飛び先が合っているかを見てください。違っていればその場で直せます。',
+    icon: 'search',
+  },
+  {
+    no: '3',
+    title: 'PDFを受け取る',
+    body: '仕上がり20mm角・K100のPDFです。そのままIllustratorに配置できます。印刷前に必ず実データでテストしてください。',
     icon: 'download',
   },
 ];

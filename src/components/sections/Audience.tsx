@@ -1,10 +1,11 @@
 import { Section } from '@/components/ui/Section';
 import { AUDIENCE } from '@/lib/content/sections';
 
-export function Audience() {
+/** index：通し番号。/qr/ では 01 から振り直すため、ページ側から渡せるようにしています */
+export function Audience({ index = '09' }: { index?: string } = {}) {
   return (
     <Section
-      index="09"
+      index={index}
       eyebrow="FOR"
       title="対象ユーザー"
       lead="日本語DTPと印刷実務の現場を前提に設計しています。"

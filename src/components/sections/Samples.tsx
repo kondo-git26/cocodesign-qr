@@ -7,7 +7,8 @@ import { toModuleRuns } from '@/lib/qr/render';
 
 const SAMPLE_CONTENT = 'https://cocodesign.jp/shop/menu?table=12';
 
-export function Samples() {
+/** index：通し番号。/qr/ では 01 から振り直すため、ページ側から渡せるようにしています */
+export function Samples({ index = '07' }: { index?: string } = {}) {
   // 表示する数値はすべて実際のサンプルQRから算出しています
   const matrix = encodeQr(SAMPLE_CONTENT, 'M');
   const pathCount = toModuleRuns(matrix).length;
@@ -21,7 +22,7 @@ export function Samples() {
 
   return (
     <Section
-      index="07"
+      index={index}
       eyebrow="SAMPLE"
       title="変換例"
       lead="同じ内容を指したまま、印刷用データとして扱える形に置き換えます。"
@@ -81,7 +82,7 @@ export function Samples() {
           <dl className="mt-4 space-y-1 font-mono text-2xs">
             <div className="flex justify-between gap-2 border-b border-sumi-200 pb-1">
               <dt className="text-sumi-500">形式</dt>
-              <dd className="text-ink">ベクター（PDF / SVG）</dd>
+              <dd className="text-ink">ベクター（PDF）</dd>
             </div>
             <div className="flex justify-between gap-2 border-b border-sumi-200 pb-1">
               <dt className="text-sumi-500">カラー</dt>

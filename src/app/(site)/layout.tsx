@@ -4,10 +4,9 @@ import { Footer } from '@/components/layout/Footer';
 import { SiteHeader } from '@/components/layout/SiteHeader';
 
 /**
- * 本サイト（トップ・規約・お問い合わせ）の共通レイアウト。
+ * 本サイト（トップ・ネット印刷おたすけ・QRコード変換・規約・お問い合わせ）の共通レイアウト。
  *
- * ヘッダーはロゴと「無料」だけに絞っています。
- * ファーストビューで説明を読ませない方針に合わせ、ナビゲーションは置きません。
+ * ヘッダーはロゴと、2つの入口へのリンクだけに絞っています。
  */
 export default function SiteLayout({ children }: { children: ReactNode }) {
   return (

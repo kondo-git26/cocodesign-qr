@@ -9,11 +9,12 @@ const ICONS = {
   layers: Layers,
 } as const;
 
-export function Features() {
+/** index：通し番号。/qr/ では 01 から振り直すため、ページ側から渡せるようにしています */
+export function Features({ index = '04' }: { index?: string } = {}) {
   return (
     <Section
       id="features"
-      index="04"
+      index={index}
       eyebrow="FEATURES"
       title="特長"
       lead="機能を増やすより、印刷データとして正しいことを優先しています。"

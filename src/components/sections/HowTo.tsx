@@ -1,7 +1,7 @@
 import { Download, Search, SlidersHorizontal, Upload } from 'lucide-react';
 
 import { Section } from '@/components/ui/Section';
-import { STEPS } from '@/lib/content/sections';
+import { STEPS, type StepItem } from '@/lib/content/sections';
 
 const ICONS = {
   upload: Upload,
@@ -10,17 +10,27 @@ const ICONS = {
   download: Download,
 } as const;
 
-export function HowTo() {
+interface HowToProps {
+  /** 通し番号。/qr/ では 01 から振り直す */
+  index?: string;
+  /** 手順。/v1/ は設定を選ぶ4手順、/qr/ は置くだけの3手順（STEPS_DROP） */
+  steps?: StepItem[];
+  lead?: string;
+}
+
+export function HowTo({
+  index = '06',
+  steps = STEPS,
+  lead = '4ステップで終わります。説明を読まなくても操作できることを目指しています。',
+}: HowToProps = {}) {
   return (
-    <Section
-      id="howto"
-      index="06"
-      eyebrow="HOW TO USE"
-      title="使い方"
-      lead="4ステップで終わります。説明を読まなくても操作できることを目指しています。"
-    >
-      <ol className="grid gap-px border border-sumi-200 bg-sumi-200 sm:grid-cols-2 lg:grid-cols-4">
-        {STEPS.map((step) => {
+    <Section id="howto" index={index} eyebrow="HOW TO USE" title="使い方" lead={lead}>
+      <ol
+        className={`grid gap-px border border-sumi-200 bg-sumi-200 ${
+          steps.length === 3 ? 'md:grid-cols-3' : 'sm:grid-cols-2 lg:grid-cols-4'
+        }`}
+      >
+        {steps.map((step) => {
           const Icon = ICONS[step.icon];
           return (
             <li key={step.no} className="relative bg-paper p-6">

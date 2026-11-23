@@ -239,15 +239,16 @@ NEXT_PUBLIC_CONVERT_API_BASE=https://api.example.com/qr
 src/
 ├── app/
 │   ├── layout.tsx            … メタデータ（title / description / OGP）、html/body
-│   ├── (site)/               … 本サイト：SiteHeader（ロゴと「無料」のみ）+ Footer
-│   │   ├── page.tsx          … トップ（/）＝ DropStage + 各セクション
+│   ├── (site)/               … 本サイト：SiteHeader（ロゴと2つの入口へのリンク）+ Footer
+│   │   ├── page.tsx          … トップ（/）＝ 2つの入口（ネット印刷おたすけ／QRコード変換）
+│   │   ├── qr/page.tsx       … QRコード変換（/qr/）＝ DropStage + 各セクション（2026-11-24 にトップから移動）
 │   │   ├── contact/ terms/ privacy/
 │   │   └── layout.tsx
 │   ├── (v1)/v1/              … 旧デザイン（比較用・noindex）。従来の Header を使う
 │   ├── globals.css / icon.svg / robots.ts / sitemap.ts
 ├── components/
 │   ├── layout/               … SiteHeader（本サイト）、Header（/v1/ 用・ナビ付き）、Footer
-│   ├── sections/             … トップと /v1/ で共通の各セクション（特長・使い方・料金など）
+│   ├── sections/             … /qr/ と /v1/ で共通の各セクション（特長・使い方・料金など）
 │   ├── converter/            … /v1/ の変換フォームの部品
 │   ├── v2/                   … ファーストビュー（置く→鮮明になる→受け取る）
 │   │   ├── DropStage.tsx     … 状態管理（置く / 貼る / 打つ → 読み取り → 受け取る）
@@ -270,7 +271,7 @@ src/
 
 - 「本文へスキップ」リンクを設置
 - FAQ・詳細は `details` / `summary`（JavaScriptなしで開閉、キーボード対応）
-- トップのドロップ領域は、外枠ではなく中の本物の `<button>` で操作します（外枠を `role="button"` にすると
+- /qr/ のドロップ領域は、外枠ではなく中の本物の `<button>` で操作します（外枠を `role="button"` にすると
   中の画像やエラー文が支援技術から読めなくなるため）。状態変化は `aria-live` で通知します
 - ボタン・フォーム部品に `aria-label` / `aria-describedby` / `role="alert"` を設定
 - フォーカスリングを明示（朱色・2px）、`prefers-reduced-motion` に対応

@@ -1,19 +1,22 @@
 import type { Metadata, Viewport } from 'next';
 import type { ReactNode } from 'react';
 
-import { absoluteUrl, SITE, SITE_URL } from '@/lib/content/site';
+import { absoluteUrl, HOME, SITE, SITE_URL } from '@/lib/content/site';
 
 import './globals.css';
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: `${SITE.title}｜${SITE.name}`,
+    default: `${SITE.name}｜${HOME.title}`,
     template: `%s｜${SITE.name}`,
   },
-  description: SITE.description,
+  description: HOME.description,
   applicationName: SITE.name,
   keywords: [
+    'ネット印刷',
+    '塗り足し',
+    '入稿データ',
     '印刷用QRコード',
     'QRコード ベクター',
     'K100',
@@ -34,8 +37,8 @@ export const metadata: Metadata = {
     type: 'website',
     locale: 'ja_JP',
     siteName: SITE.name,
-    title: `${SITE.title}｜${SITE.name}`,
-    description: SITE.description,
+    title: `${SITE.name}｜${HOME.title}`,
+    description: HOME.description,
     url: SITE_URL,
     images: [
       {
@@ -48,8 +51,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: `${SITE.title}｜${SITE.name}`,
-    description: SITE.description,
+    title: `${SITE.name}｜${HOME.title}`,
+    description: HOME.description,
     images: [absoluteUrl('/ogp.png')],
   },
   robots: {
@@ -69,23 +72,6 @@ export const viewport: Viewport = {
   themeColor: '#ffffff',
 };
 
-const STRUCTURED_DATA = {
-  '@context': 'https://schema.org',
-  '@type': 'WebApplication',
-  name: `${SITE.serviceName}｜${SITE.name}`,
-  applicationCategory: 'DesignApplication',
-  operatingSystem: 'Web',
-  description: SITE.description,
-  url: SITE_URL,
-  inLanguage: 'ja',
-  offers: {
-    '@type': 'Offer',
-    price: '0',
-    priceCurrency: 'JPY',
-    description: '無料プラン（1件ずつ変換 / 登録不要）',
-  },
-};
-
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ja">
@@ -97,11 +83,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           本文へスキップ
         </a>
         {children}
-        <script
-          type="application/ld+json"
-          // 構造化データ。文字列は自前で定義した定数のみです。
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(STRUCTURED_DATA) }}
-        />
       </body>
     </html>
   );

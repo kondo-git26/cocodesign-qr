@@ -5,7 +5,8 @@ export function Footer() {
     <footer className="border-t border-sumi-200 bg-sumi-50">
       <div className="mx-auto w-full max-w-content px-5 py-12 sm:px-8 md:py-16">
         <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
-          <div>
+          {/* リンクが増えても、タグラインが途中で折れないようにする */}
+          <div className="md:shrink-0">
             <p className="text-lg font-bold leading-relaxed tracking-japanese text-ink md:text-xl">
               {SITE.tagline}
             </p>

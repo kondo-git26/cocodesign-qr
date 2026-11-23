@@ -36,6 +36,16 @@ export const SITE = {
 } as const;
 
 /**
+ * トップページ（2つの入口）の題と説明。
+ * SITE.title / SITE.description は QRコード変換のページ（/qr/）で使います。
+ */
+export const HOME = {
+  title: 'ネット印刷のデータ直しと、印刷用QRコード変換',
+  description:
+    'チラシや名刺をネット印刷に出すときの「塗り足しが足りません」を直す「ネット印刷おたすけ」（1面1,100円から）と、ぼやけたQRコードを印刷用のPDFに変える無料の変換ツール。名古屋・大須で印刷データを作っている合同会社大須メディアクォータが運営しています。',
+} as const;
+
+/**
  * 販売業者の情報。特定商取引法に基づく表記と利用規約で使います。
  * 登記上の商号・所在地をそのまま記載します（Stripe の審査は登記と一致している必要があります）。
  */
@@ -86,8 +96,15 @@ export const NAV_LINKS = [
   { href: internalHref('/contact/'), label: 'お問い合わせ' },
 ] as const;
 
+/** ヘッダーに出す2つの入口 */
+export const HEADER_LINKS = [
+  { href: internalHref('/print/'), label: 'ネット印刷おたすけ' },
+  { href: internalHref('/qr/'), label: 'QRコード変換' },
+] as const;
+
 export const FOOTER_LINKS = [
   { href: internalHref('/print/'), label: 'ネット印刷おたすけ' },
+  { href: internalHref('/qr/'), label: 'QRコード変換' },
   { href: internalHref('/terms/'), label: '利用規約' },
   { href: internalHref('/tokushoho/'), label: '特定商取引法に基づく表記' },
   { href: internalHref('/privacy/'), label: 'プライバシーポリシー' },

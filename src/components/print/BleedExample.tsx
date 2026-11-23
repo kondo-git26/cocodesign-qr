@@ -73,8 +73,8 @@ function DataFigure({ id, bleed }: { id: string; bleed: boolean }) {
   );
 }
 
-/** 切ったあとの図。刃が右下へ少しずれて切られた場合 */
-function CutFigure({ id, bleed }: { id: string; bleed: boolean }) {
+/** 切ったあとの図。刃が右下へ少しずれて切られた場合。トップの入口の絵にも使います */
+export function CutFigure({ id, bleed }: { id: string; bleed: boolean }) {
   const clipId = `${id}-paper`;
   return (
     <svg

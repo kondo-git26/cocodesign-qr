@@ -1,14 +1,17 @@
 'use client';
 
-import type { DragEvent } from 'react';
+import { memo, type DragEvent } from 'react';
 
-import { QrModules } from '@/components/ui/QrArtwork';
+import { ArrowRight } from 'lucide-react';
+
+import { QrLowRes, QrModules, QrVector } from '@/components/ui/QrArtwork';
+import { SAMPLE_QR_CONTENT } from '@/lib/content/site';
 
 export type StagePhase = 'idle' | 'reading' | 'developing' | 'ready' | 'error';
 
 interface StageProps {
   phase: StagePhase;
-  /** 待機時の案内（例：⌘V または ドロップ） */
+  /** 待機時の入れ方の案内（例：⌘V または ドロップ）。端末が確定するまでは空文字 */
   hint: string;
   /** 変換前：元画像から切り出したシンボル部分（data URL）。テキスト入力時は null */
   beforeSrc: string | null;
@@ -22,6 +25,32 @@ interface StageProps {
   onDrop: (event: DragEvent<HTMLDivElement>) => void;
   onAnimationEnd: () => void;
 }
+
+/**
+ * 待機中の置き場に出す絵。粗いQRコード → くっきりしたQRコード。
+ * 「何を置く場所で、何になって返るか」を、言葉より先に絵で見せます
+ * （2026-11-24 近藤さん「直感的に何のページか分からない。QRコードは要る」）。
+ * どちらも実際に読み取れるQRで、粗いほうは実際に低解像度へ落とした画像です（DESIGN.md §6）。
+ * ドラッグ中の再描画で作り直さないよう memo にしています。
+ */
+const IdlePicture = memo(function IdlePicture() {
+  return (
+    <span aria-hidden="true" className="flex items-center gap-3 sm:gap-4">
+      <span className="block w-[4.5rem] border border-sumi-300 bg-paper p-1 sm:w-24">
+        <QrLowRes
+          content={SAMPLE_QR_CONTENT}
+          pixelsPerModule={1.5}
+          className="block h-auto w-full"
+          alt=""
+        />
+      </span>
+      <ArrowRight size={18} className="shrink-0 text-sumi-500" />
+      <span className="block w-[4.5rem] border border-sumi-300 bg-paper p-1 sm:w-24">
+        <QrVector content={SAMPLE_QR_CONTENT} quietZone={2} className="block h-auto w-full" />
+      </span>
+    </span>
+  );
+});
 
 /**
  * 置く場所であり、結果が現れる場所。
@@ -81,9 +110,14 @@ export function Stage({
         <button
           type="button"
           onClick={onActivate}
-          className="absolute inset-0 flex items-center justify-center rounded-sm px-6 text-center text-lg font-medium tracking-japanese text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shu sm:text-xl"
+          className="absolute inset-0 flex flex-col items-center justify-center gap-4 rounded-sm px-6 text-center tracking-japanese text-ink focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-shu sm:gap-5"
         >
-          {hint}
+          <IdlePicture />
+          <span className="flex flex-col items-center gap-1">
+            <span className="text-lg font-medium sm:text-xl">QRコードを置く</span>
+            {/* 端末が確定するまでは空。高さだけ確保して、あとから文字が入っても動かないようにする */}
+            <span className="min-h-[1.5rem] text-sm text-sumi-600">{hint}</span>
+          </span>
         </button>
       )}
 

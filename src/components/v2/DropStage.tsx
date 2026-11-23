@@ -33,7 +33,7 @@ const TOO_LARGE_MESSAGE =
   'このQRは大きすぎて（型番16以上）、このツールでは扱えません。もう少し短い内容のQRでお試しください。';
 
 /**
- * v2 のファーストビュー。
+ * QRコード変換（/qr/）のファーストビュー。
  *
  * 置く（ドロップ / ⌘V / クリック）→ 粗い QR が鮮明になる → 受け取る。
  * 「QR の中身」の 1 行は、読み取り結果の表示でもあり、URL・テキストの入力欄でもある。
@@ -343,10 +343,11 @@ export function DropStage() {
     }
   };
 
-  // 端末が確定するまでは端末に依存しない文言を出す（静的HTMLとの食い違いを避ける）
+  // 「QRコードを置く」は Stage 側で常に出す。ここは入れ方だけ。
+  // 端末が確定するまでは空にする（静的HTMLとの食い違いを避ける）
   const hint =
     coarsePointer === null
-      ? 'QRコードを置く'
+      ? ''
       : coarsePointer
         ? 'タップして画像を選ぶ'
         : `${isMac ? '⌘V' : 'Ctrl+V'} または ドロップ`;
@@ -374,6 +375,12 @@ export function DropStage() {
           <span className="inline-block">QRコードを、</span>
           <span className="inline-block">印刷用のK100ベクターに。</span>
         </h1>
+        {/* 印刷の言葉を知らない人にも、何をする場所かが1行で分かるように */}
+        <p className="mx-auto mt-3 max-w-xl text-center text-sm leading-7 text-sumi-600">
+          <span className="inline-block">小さくてぼやけたQRコードを、</span>
+          <span className="inline-block">印刷でくっきり出るPDFに変えます。</span>
+          <span className="inline-block">無料・登録なし。</span>
+        </p>
 
         <div className="mt-8 md:mt-10">
           <Stage
