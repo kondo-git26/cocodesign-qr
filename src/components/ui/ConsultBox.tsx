@@ -21,6 +21,7 @@ export function ConsultBox({ subject, className = '' }: { subject: string; class
         <li>ご相談は無料です。「これは頼めるのか」だけでもかまいません。</li>
         <li>お受けできるかどうかと金額を、原則1営業日以内にお返事します。</li>
         <li>作業は、金額をお伝えしたあとです。お受けできないときは、費用はかかりません。</li>
+        <li>電話かZoomでも相談できます（予約制）。ご都合のよい日時を、メールで2〜3つお知らせください。</li>
       </ul>
       <p className="mt-4 text-sm leading-7 text-sumi-600">
         お返事するのは、{BUSINESS.company}（名古屋市中区大須）です。ふだんは、ガイドブックやリーフレットの印刷データを作っています。

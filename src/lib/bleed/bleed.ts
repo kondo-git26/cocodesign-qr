@@ -8,8 +8,6 @@
  */
 
 export type BleedMode = 'extend' | 'mirror';
-/** 画面で選べる足し方。'auto'（おまかせ）は、ふちの絵柄を見て上の2つから選びます */
-export type BleedModeChoice = BleedMode | 'auto';
 
 export interface PaperSize {
   id: string;
@@ -42,7 +40,7 @@ export interface BleedOptions {
   widthMm: number;
   heightMm: number;
   bleedMm: number;
-  mode: BleedModeChoice;
+  mode: BleedMode;
 }
 
 export interface BleedResult {
@@ -55,8 +53,6 @@ export interface BleedResult {
   trimWidthPx: number;
   trimHeightPx: number;
   bleedPx: number;
-  /** 実際に使った足し方（おまかせのときは、選ばれたほう） */
-  usedMode: BleedMode;
   /** 画像の縦横比が仕上がりサイズと違い、はみ出した分を切ったか */
   cropped: boolean;
   /** 仕上がりサイズ・塗り足し（mm）。PDF に書く */
@@ -89,48 +85,8 @@ export async function loadImage(file: File): Promise<ImageBitmap> {
   }
 }
 
-/**
- * おまかせ：ふちの絵柄を見て、足し方を選ぶ。
- *
- * ふちのいちばん外の列と、塗り足しの幅だけ内側の列を比べます。
- * ほとんど同じ色なら、ふちは単色（べた塗り・余白）なので「伸ばす」。
- * 違いが大きければ、写真や模様が端まで来ているので「折り返す」。
- * 「伸ばす」は絵柄があるとすじになり、「折り返す」は単色だとJPEGのざらつきまで写すためです。
- */
-function pickMode(ctx: CanvasRenderingContext2D, W: number, H: number, bleedPx: number): BleedMode {
-  const d = Math.max(1, Math.min(bleedPx, W - 1, H - 1));
-  let total = 0;
-  let big = 0;
-  let count = 0;
-  const add = (data: Uint8ClampedArray, i: number, j: number) => {
-    const diff =
-      (Math.abs(data[i] - data[j]) + Math.abs(data[i + 1] - data[j + 1]) + Math.abs(data[i + 2] - data[j + 2])) / 3;
-    total += diff;
-    if (diff > 24) big += 1;
-    count += 1;
-  };
-  const stepX = Math.max(1, Math.floor(W / 400));
-  const stepY = Math.max(1, Math.floor(H / 400));
-  const rows = d + 1;
-
-  const top = ctx.getImageData(0, 0, W, rows).data;
-  const bottom = ctx.getImageData(0, H - rows, W, rows).data;
-  for (let x = 0; x < W; x += stepX) {
-    add(top, x * 4, (d * W + x) * 4); // 上：外＝0行目、内＝d行目
-    add(bottom, (d * W + x) * 4, x * 4); // 下：外＝最後の行、内＝0行目
-  }
-  const left = ctx.getImageData(0, 0, rows, H).data;
-  const right = ctx.getImageData(W - rows, 0, rows, H).data;
-  for (let y = 0; y < H; y += stepY) {
-    add(left, y * rows * 4, (y * rows + d) * 4); // 左：外＝0列目
-    add(right, (y * rows + d) * 4, y * rows * 4); // 右：外＝最後の列
-  }
-  if (count === 0) return 'extend';
-  return total / count < 5 && big / count < 0.03 ? 'extend' : 'mirror';
-}
-
 export function makeBleed(image: ImageBitmap, options: BleedOptions): BleedResult {
-  const { widthMm, heightMm, bleedMm } = options;
+  const { widthMm, heightMm, bleedMm, mode } = options;
   if (!(widthMm > 0 && heightMm > 0)) throw new BleedInputError('仕上がりサイズを入れてください。');
 
   // 元画像を仕上がりサイズに置いたときの解像度（長辺ではなく両方向の小さい方）
@@ -186,8 +142,6 @@ export function makeBleed(image: ImageBitmap, options: BleedOptions): BleedResul
   const W = trimW;
   const H = trimH;
 
-  const mode: BleedMode = options.mode === 'auto' ? pickMode(tctx, W, H, b) : options.mode;
-
   if (b > 0) {
     if (mode === 'extend') {
       // ふちの 1 ピクセル幅を外へ引き伸ばす
@@ -239,7 +193,6 @@ export function makeBleed(image: ImageBitmap, options: BleedOptions): BleedResul
     trimWidthPx: trimW,
     trimHeightPx: trimH,
     bleedPx: b,
-    usedMode: mode,
     cropped,
     options,
   };

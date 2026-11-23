@@ -31,7 +31,7 @@ const MENU: MenuItem[] = [
     name: PRINT_HELP.bleedName,
     price: PRINT_HELP.bleedPrice,
     unit: PRINT_HELP.bleedUnit,
-    body: '仕上がりサイズで作ったデータに、塗り足し3mmを付けてお返しします。ふちに人や文字、ぼかしがある絵も、人が見て自然に足します。',
+    body: '仕上がりサイズで作ったデータに、塗り足し3mmを付けてお返しします。ふちに人や文字、ぼかしがある絵も、人が見て自然に足します。出す印刷会社の決まりに合わせて、トンボも付けます。',
     tiers: PRINT_HELP.bleedTiers,
     foot: 'どちらになるかは、データを見て作業の前にお伝えします。表と裏があるものは2面です。',
   },
@@ -109,14 +109,34 @@ export default function PrintPage() {
           足りないところを直して、印刷会社へ送れる形にしてお返しします。
         </p>
 
-        {/* まず「頼める・いくら・どう頼む」。困って来た人が、解説を読み終える前に動けるように */}
+        {/* まず無料ツール。かんたんなものは、ここで自分で済ませてもらう（2026-11-24 近藤さん） */}
+        <section aria-labelledby="tool-heading" className="mt-8 border-t-2 border-ink pt-6 md:mt-10 md:pt-8">
+          <p className="spec-label">無料・登録なし</p>
+          <h2 id="tool-heading" className="mt-2 text-xl font-bold tracking-japanese text-ink md:text-2xl">
+            自分で塗り足し3mmを付ける
+          </h2>
+          <p className="mt-4 max-w-2xl text-base leading-8 text-sumi-700">
+            仕上がりサイズで作った画像を置くと、ふちから3mm足してお返しします。画像はこのブラウザの中だけで処理され、外には送られません。
+          </p>
+          <div className="mt-8">
+            <BleedTool />
+          </div>
+          <p className="mt-8 border-t border-sumi-200 pt-5 text-base leading-8 text-ink">
+            ツールで足せない絵や、PDFのデータは、
+            <a href="#start-heading" className="font-bold underline underline-offset-4">
+              こちらで直します（1面{PRINT_HELP.bleedPrice}）
+            </a>
+          </p>
+        </section>
+
+        {/* 有料の2つと相談。ツールで済まなかった人の行き先 */}
         <section
           aria-labelledby="start-heading"
-          className="mt-8 grid gap-6 border-t-2 border-ink pt-6 md:mt-10 md:grid-cols-2 md:gap-10 md:pt-8"
+          className="mt-16 grid gap-6 border-t-2 border-ink pt-6 md:grid-cols-2 md:gap-10 md:pt-8"
         >
           <div>
             <h2 id="start-heading" className="text-base font-bold tracking-japanese text-ink">
-              頼めること
+              こちらで直すとき
             </h2>
             <dl className="mt-3 border-t border-sumi-200">
               {PAID.map((item) => (
@@ -134,13 +154,6 @@ export default function PrintPage() {
                 </div>
               ))}
             </dl>
-            <p className="mt-3 text-sm leading-7 text-sumi-600">
-              自分で付けられる
-              <a href="#tool-heading" className="text-ink underline underline-offset-4">
-                無料のツール
-              </a>
-              も、このページの下にあります。
-            </p>
           </div>
           <ConsultBox subject={`${PRINT_HELP.name}の相談`} className="self-start" />
         </section>
@@ -211,6 +224,7 @@ export default function PrintPage() {
               <p className="mt-3 break-all font-mono text-sm text-ink">{SITE.contactEmail}</p>
               <p className="mt-2 text-sm leading-7 text-sumi-600">
                 「これは頼めるのか」だけのご相談でもかまいません。ご相談は無料です。
+                電話かZoomでも相談できます（予約制）。ご都合のよい日時を、メールで2〜3つお知らせください。
               </p>
             </div>
           </div>
@@ -235,22 +249,6 @@ export default function PrintPage() {
               </a>
               に記載しています。
             </p>
-          </div>
-        </section>
-
-        <section aria-labelledby="tool-heading" className="mt-16 border-t border-sumi-200 pt-12">
-          <p className="spec-label">無料・登録なし</p>
-          <h2 id="tool-heading" className="mt-2 text-xl font-bold tracking-japanese text-ink md:text-2xl">
-            自分で塗り足し3mmを付ける
-          </h2>
-          <p className="mt-4 max-w-2xl text-base leading-8 text-sumi-700">
-            仕上がりサイズで作った画像を置くと、ふちから3mm足してお返しします。画像はこのブラウザの中だけで処理され、外には送られません。
-          </p>
-          <p className="mt-3 max-w-2xl text-base leading-8 text-sumi-700">
-            いま扱えるのは PNG と JPEG の画像です。PDF のデータや、ふちに人や文字がある絵は、上の「{PRINT_HELP.bleedName}」（{PRINT_HELP.bleedPrice}）でお受けします。
-          </p>
-          <div className="mt-10">
-            <BleedTool />
           </div>
         </section>
 
