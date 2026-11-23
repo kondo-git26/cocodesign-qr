@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Mail } from 'lucide-react';
 
+import { BleedExample } from '@/components/print/BleedExample';
 import { BleedTool } from '@/components/print/BleedTool';
 import { ButtonLink } from '@/components/ui/Button';
 import { absoluteUrl, internalHref, PRINT_HELP, SITE } from '@/lib/content/site';
@@ -81,7 +82,19 @@ export default function PrintPage() {
           足りないところを直して、印刷会社へ送れる形にしてお返しします。名古屋・大須で、ガイドブックやリーフレットの印刷データを作っている者がお受けします。
         </p>
 
-        <section aria-labelledby="menu-heading" className="mt-12">
+        <section aria-labelledby="what-heading" className="mt-12">
+          <h2 id="what-heading" className="text-base font-bold tracking-japanese text-ink">
+            「塗り足しが足りません」とは
+          </h2>
+          <p className="mt-3 max-w-2xl text-sm leading-7 text-sumi-600">
+            印刷会社は、大きな紙にまとめて刷ってから切ります。切る刃は少しずれることがあるので、色や写真は切るところより3mm外まで伸ばしておく決まりです。これが「塗り足し」です。
+          </p>
+          <div className="mt-5">
+            <BleedExample />
+          </div>
+        </section>
+
+        <section aria-labelledby="menu-heading" className="mt-14">
           <h2 id="menu-heading" className="text-base font-bold tracking-japanese text-ink">
             お受けすること
           </h2>
@@ -155,7 +168,6 @@ export default function PrintPage() {
             自分で塗り足し3mmを付ける
           </h2>
           <p className="mt-4 max-w-2xl text-sm leading-7 text-sumi-600">
-            ネット印刷では、紙を切るときに少しずれても絵のふちが白く残らないように、切るところより3mm外まで絵を足しておきます。これが「塗り足し」です。
             仕上がりサイズで作った画像を置くと、ふちから3mm足してお返しします。画像はこのブラウザの中だけで処理され、外には送られません。
           </p>
           <p className="mt-3 max-w-2xl text-sm leading-7 text-sumi-600">

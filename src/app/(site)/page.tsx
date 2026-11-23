@@ -2,6 +2,7 @@ import { Audience } from '@/components/sections/Audience';
 import { Faq } from '@/components/sections/Faq';
 import { Features } from '@/components/sections/Features';
 import { HowTo } from '@/components/sections/HowTo';
+import { PrintHelpBand } from '@/components/print/PrintHelpBand';
 import { Pricing } from '@/components/sections/Pricing';
 import { Problems } from '@/components/sections/Problems';
 import { Samples } from '@/components/sections/Samples';
@@ -15,6 +16,7 @@ import { DropStage } from '@/components/v2/DropStage';
 export default function HomePage() {
   return (
     <>
+      <PrintHelpBand />
       <DropStage />
       <Features />
       <Problems />
