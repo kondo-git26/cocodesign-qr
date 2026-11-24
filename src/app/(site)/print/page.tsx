@@ -168,6 +168,20 @@ export default function PrintPage() {
           <div className="mt-5">
             <BleedExample />
           </div>
+          <ul className="mt-5 space-y-2 text-base leading-8">
+            <li className="flex gap-2.5">
+              <Dot />
+              <a href={internalHref('/print/nuritashi/')} className="font-bold text-ink underline underline-offset-4">
+                塗り足しとは？サイズ別の早見表（A4・A5・名刺）
+              </a>
+            </li>
+            <li className="flex gap-2.5">
+              <Dot />
+              <a href={internalHref('/print/printpac/')} className="font-bold text-ink underline underline-offset-4">
+                プリントパックにPDFで入稿するとき、止まりやすい6つのところ
+              </a>
+            </li>
+          </ul>
         </section>
 
         <section aria-labelledby="menu-heading" className="mt-14">

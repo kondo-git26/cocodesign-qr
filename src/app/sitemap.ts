@@ -10,6 +10,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { url: `${SITE_URL}/`, lastModified, changeFrequency: 'weekly', priority: 1 },
     { url: `${SITE_URL}/print/`, lastModified, changeFrequency: 'monthly', priority: 0.8 },
+    { url: `${SITE_URL}/print/nuritashi/`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
+    { url: `${SITE_URL}/print/printpac/`, lastModified, changeFrequency: 'monthly', priority: 0.7 },
     { url: `${SITE_URL}/qr/`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${SITE_URL}/contact/`, lastModified, changeFrequency: 'monthly', priority: 0.5 },
     { url: `${SITE_URL}/tokushoho/`, lastModified, changeFrequency: 'yearly', priority: 0.3 },
