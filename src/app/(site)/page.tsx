@@ -4,13 +4,10 @@ import { ArrowRight } from 'lucide-react';
 import { CutFigure } from '@/components/print/BleedExample';
 import { ButtonLink } from '@/components/ui/Button';
 import { ConsultBox } from '@/components/ui/ConsultBox';
-import { QrLowRes, QrVector } from '@/components/ui/QrArtwork';
 import {
   absoluteUrl,
   internalHref,
   PRINT_HELP,
-  SAMPLE_QR_CONTENT,
-  SITE,
 } from '@/lib/content/site';
 
 export const metadata: Metadata = {
@@ -31,7 +28,56 @@ function PriceRow({ name, price, unit }: { name: string; price: string; unit: st
 }
 
 /**
- * トップページ。入口を2つ置きます。主役は「ネット印刷おたすけ」です。
+ * 困りごとの入口（2026-11-24 近藤さん「ニーズを中心にしたサイト構成」）。
+ * 検索の多い言葉（塗り足し・Canva で印刷・プリントパック 入稿）から並べています。
+ * 材料：観音通テラス/ココデザイン係/検索キーワード_20261124.md
+ */
+const NEEDS = [
+  {
+    who: '印刷会社から言われた',
+    title: '「塗り足しが足りません」と言われた',
+    body: '塗り足しとは何か、どの大きさで作ればいいかを早見表で。',
+    href: '/print/nuritashi/',
+  },
+  {
+    who: 'Canva・Word・AI で作った',
+    title: '作ったチラシを、印刷に出したい',
+    body: 'アプリごとの塗り足しの付け方と、無料で3mm足せるツール。',
+    href: '/print/nuritashi/#how',
+  },
+  {
+    who: 'プリントパックに出す',
+    title: 'PDFの入稿で止まった',
+    body: '「データ不備」になりやすい6つのところを、公式ガイドをもとに。',
+    href: '/print/printpac/',
+  },
+  {
+    who: 'チラシや名刺に入れる',
+    title: '印刷用のQRコードを作りたい',
+    body: 'URLや画像から、印刷でくっきり出るQRコード（K100のPDF）を無料で。データに入れる作業も承ります。',
+    href: '/qr/',
+  },
+] as const;
+
+function NeedCard({ who, title, body, href }: (typeof NEEDS)[number]) {
+  return (
+    <a
+      href={internalHref(href)}
+      className="group flex h-full flex-col border border-sumi-300 bg-paper p-5 transition-colors hover:border-ink hover:bg-sumi-50"
+    >
+      <span className="text-sm text-sumi-600">{who}</span>
+      <span className="mt-1 text-lg font-bold leading-snug tracking-japanese text-ink">{title}</span>
+      <span className="mt-2 text-sm leading-7 text-sumi-700">{body}</span>
+      <span className="mt-auto flex items-center gap-1.5 pt-3 text-sm font-bold text-ink">
+        <span className="underline underline-offset-4">読む</span>
+        <ArrowRight size={16} aria-hidden="true" className="transition-transform group-hover:translate-x-0.5" />
+      </span>
+    </a>
+  );
+}
+
+/**
+ * トップページ。まず困りごとの4つ、その下に「こちらで直す（有料）」と相談。主役は「ネット印刷おたすけ」です。
  *
  * 2026-11-24 まではここが QRコード変換そのものでした（いまは /qr/）。
  * 一般の方向けの「ネット印刷おたすけ」を始めて、1ページに相手が2人いる状態になったため、
@@ -50,16 +96,27 @@ export default function HomePage() {
           <span className="inline-block">困ったところを直します。</span>
         </h1>
         <p className="mt-4 max-w-2xl text-base leading-8 text-sumi-700">
-          チラシや名刺をネット印刷に出す方と、仕事でQRコードを印刷物に入れる方へ。
+          チラシや名刺を、ネット印刷に出したい方へ。どれで困っているかを選んでください。
         </p>
 
-        {/* 入口 1（主役）：ネット印刷おたすけ。一般の方向け */}
+        {/* 困りごとの入口。検索から来た人が、自分の言葉で選べるように */}
+        <nav aria-label="困りごとから選ぶ" className="mt-8 md:mt-10">
+          <ul className="grid gap-3 sm:grid-cols-2">
+            {NEEDS.map((need) => (
+              <li key={need.href}>
+                <NeedCard {...need} />
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* こちらで直す（有料）：ネット印刷おたすけ。困りごとの入口で解決しなかった人の行き先 */}
         <section
           aria-labelledby="door-print"
-          className="mt-8 grid gap-x-12 gap-y-5 border-t-2 border-ink pt-6 md:mt-12 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:pt-10"
+          className="mt-12 grid gap-x-12 gap-y-5 border-t-2 border-ink pt-6 md:mt-16 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)] md:pt-10"
         >
           <div className="md:col-start-2 md:row-start-1">
-            <p className="text-sm text-sumi-600">チラシや名刺を、ネット印刷に出す方へ</p>
+            <p className="text-sm text-sumi-600">自分で直せないときは、こちらで直します</p>
             <h2
               id="door-print"
               className="mt-1 text-2xl font-bold tracking-japanese text-ink md:text-3xl"
@@ -104,51 +161,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* 入口 2（短く）：QRコード変換。印刷の仕事をしている方向け。有料の値段は /qr/ に任せる */}
-        <section
-          aria-labelledby="door-qr"
-          className="mt-12 grid items-center gap-x-8 gap-y-4 border-t border-sumi-300 pt-6 md:mt-16 md:grid-cols-[auto_minmax(0,1fr)_auto] md:pt-8"
-        >
-          <div className="md:col-start-2 md:row-start-1">
-            <p className="text-sm text-sumi-600">印刷会社・DTP・デザイナーの方へ</p>
-            <h2 id="door-qr" className="mt-1 text-lg font-bold tracking-japanese text-ink md:text-xl">
-              {SITE.serviceName}
-            </h2>
-            <p className="mt-2 text-sm leading-7 text-sumi-700">
-              小さくてぼやけたQRコードを、印刷でくっきり出るPDF（K100のベクター）に変えます。無料・登録なし。
-            </p>
-          </div>
-
-          <a
-            href={internalHref('/qr/')}
-            aria-hidden="true"
-            tabIndex={-1}
-            className="flex w-fit items-center gap-2.5 bg-sumi-50 p-3 md:col-start-1 md:row-start-1"
-          >
-            <span className="block w-16 border border-sumi-300 bg-paper p-1">
-              <QrLowRes
-                content={SAMPLE_QR_CONTENT}
-                pixelsPerModule={1.5}
-                className="block h-auto w-full"
-                alt=""
-              />
-            </span>
-            <ArrowRight size={16} className="shrink-0 text-sumi-500" />
-            <span className="block w-16 border border-sumi-300 bg-paper p-1">
-              <QrVector content={SAMPLE_QR_CONTENT} quietZone={2} className="block h-auto w-full" />
-            </span>
-          </a>
-
-          <ButtonLink
-            href={internalHref('/qr/')}
-            variant="secondary"
-            className="w-full sm:w-auto md:col-start-3 md:row-start-1"
-          >
-            QRコードを変換する
-            <ArrowRight size={16} aria-hidden="true" />
-          </ButtonLink>
-        </section>
-
         {/* どちらか分からない人のための出口。誰が返事をするかも、ここにまとめる */}
         <section
           aria-labelledby="ask-heading"
@@ -156,7 +168,7 @@ export default function HomePage() {
         >
           <div>
             <h2 id="ask-heading" className="text-lg font-bold tracking-japanese text-ink">
-              どちらか分からないときは、メールでどうぞ
+              どれにも当てはまらないときは、メールでどうぞ
             </h2>
             <p className="mt-3 text-base leading-8 text-sumi-700">
               データと、何に困っているかを送ってください。頼めることかどうかから、お返事します。

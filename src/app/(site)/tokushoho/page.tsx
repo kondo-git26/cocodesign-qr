@@ -24,7 +24,7 @@ export default function TokushohoPage() {
     <PageShell
       title="特定商取引法に基づく表記"
       lead={`${SITE.name}が提供する有料サービス「${AGENCY.name}」「${BULK.name}」および「${PRINT_HELP.name}」についての表記です。無料でお使いいただけるツールは、この表記の対象外です。`}
-      updatedAt="2026年11月22日"
+      updatedAt="2026年11月24日"
     >
       <dl className="mb-4">
         <Row label="販売業者">{BUSINESS.company}</Row>
@@ -57,9 +57,15 @@ export default function TokushohoPage() {
           <strong className="font-bold text-ink">{AGENCY.name}</strong>
           <br />
           {AGENCY.price}（{AGENCY.priceNote}）
+          {AGENCY.tiers.map((tier) => (
+            <span key={tier.name} className="block pl-4">
+              {tier.name}：{tier.price}（{tier.body}）
+            </span>
+          ))}
         </p>
         <p>
-          仕上がりサイズ、余白、出力形式のご指定を含みます。支給データ1件につき1件として数えます。
+          K100のQRコードを、お客様の入稿データ（Illustrator・InDesign・PDF）に入れます。入稿データ1つにつき1データとして数えます。
+          どちらの金額になるかは、データを見て作業に入る前にお伝えします。
         </p>
         <p className="pt-2">
           <strong className="font-bold text-ink">{BULK.name}</strong>
@@ -106,20 +112,21 @@ export default function TokushohoPage() {
           請求書に記載の口座へお振込みください。クレジットカードでのお支払いは準備中です。
         </p>
         <p>
-          {AGENCY.name}・{BULK.name}：お受けできることをお返ししたあと、作業に入る前にお振込みをお願いしています。
+          {BULK.name}：お受けできることをお返ししたあと、作業に入る前にお振込みをお願いしています。
         </p>
         <p>
-          {PRINT_HELP.name}：納品のときに請求書をお送りします。請求書の日付から7日以内にお振込みください。
+          {AGENCY.name}・{PRINT_HELP.name}：納品のときに請求書をお送りします。請求書の日付から7日以内にお振込みください。
         </p>
       </Clause>
 
       <Clause heading="お申し込みからお届けまで">
+        <p>{BULK.name}は、次のとおりです。</p>
         <ol className="space-y-2">
           {[
-            'お問い合わせから、支給データまたはCSVファイルと、ご希望のサイズ・余白・形式・納期をお送りいただきます。',
+            'お問い合わせから、CSVファイルと、ご希望のサイズ・余白・形式・納期をお送りいただきます。',
             '内容を確認し、お受けできるかどうかを原則1営業日以内にお返しします。',
             'お受けできる場合にかぎり、請求書（PDF）をお送りします。',
-            'ご入金を確認したのち、原則として翌営業日までにメールで納品します。一括作成はZIPファイルにまとめてお渡しします。',
+            'ご入金を確認したのち、原則として翌営業日までに、ZIPファイルにまとめてメールで納品します。',
           ].map((step, index) => (
             <li key={step} className="flex gap-3">
               <span aria-hidden="true" className="shrink-0 font-mono text-2xs text-sumi-500">
@@ -130,7 +137,11 @@ export default function TokushohoPage() {
           ))}
         </ol>
         <p>
-          支給データの状態や件数によっては、これより日数をいただく場合があります。その場合は事前にお知らせします。
+          件数によっては、これより日数をいただく場合があります。その場合は事前にお知らせします。
+        </p>
+        <p className="pt-2">
+          {AGENCY.name}は、メールで入稿データとQRコードの中身をお送りいただき、
+          お受けできるかどうかと金額を原則1営業日以内にお返しします。お受けしてから2営業日以内をめやすにメールで納品します。
         </p>
         <p className="pt-2">
           {PRINT_HELP.name}は、メールでデータと仕上がりの大きさをお送りいただき、
@@ -162,10 +173,9 @@ export default function TokushohoPage() {
         </p>
         <p>
           お支払いのあと作業に入る前であれば、お申し出により全額をお返しします。
-          また、変換代行において支給データから内容を復元できず、納品できなかった場合も全額をお返しします。
         </p>
         <p>
-          {PRINT_HELP.name}は、当社が作業に入る前であれば、費用なしでキャンセルできます。
+          {AGENCY.name}と{PRINT_HELP.name}は、当社が作業に入る前であれば、費用なしでキャンセルできます。
           作業に入ったあとのキャンセルは、そこまでの作業分をご相談のうえご請求する場合があります。
         </p>
         <p>

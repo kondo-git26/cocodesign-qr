@@ -13,7 +13,7 @@ export function Pricing({ index = '08' }: { index?: string } = {}) {
       index={index}
       eyebrow="PRICING"
       title="料金"
-      lead="無料の変換は登録なしでそのままお使いいただけます。本ツールで扱えない支給データの変換代行と、CSVからの一括作成を有料でお受けします。"
+      lead="無料の変換は登録なしでそのままお使いいただけます。できたQRコードを入稿データに入れる作業と、CSVからの一括作成を有料でお受けします。"
     >
       <ul className="grid gap-px border border-sumi-200 bg-sumi-200 md:grid-cols-3">
         {PRICING_PLANS.map((plan) => (
@@ -57,11 +57,11 @@ export function Pricing({ index = '08' }: { index?: string } = {}) {
         ))}
       </ul>
 
-      <div className="mt-6 space-y-2 border border-sumi-200 bg-kinari/40 px-4 py-3 text-2xs leading-5 text-sumi-600">
+      <div className="mt-6 space-y-2 border border-sumi-200 bg-sumi-50 px-4 py-3 text-2xs leading-5 text-sumi-600">
         <p>
           有料の2つは、先に内容を確認して、お受けできるかをお返しします。
-          お受けできる場合にかぎり、お支払いのご案内をお送りします。
-          変換代行で読み取れずに納品できない場合は、お支払いいただいた全額をお返しします。
+          「データに入れる」は、納品のときに請求書をお送りします（7日以内にお振込み）。
+          一括作成は、お受けできる場合にかぎり、作業の前にお支払いのご案内をお送りします。
         </p>
         <p>
           支払方法・納品時期・キャンセルの条件は

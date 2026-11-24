@@ -11,9 +11,9 @@ export const metadata: Metadata = {
 };
 
 const TOPICS = [
-  '変換代行のお申し込み',
+  'QRコードをデータに入れる作業のお申し込み',
   'CSVからの一括作成のお申し込み',
-  'PDF・Illustrator・InDesignで支給されたデータのご相談',
+  '無料の変換ツールで読み取れなかった画像のご相談',
   '仕上がりサイズ・余白・出力形式のご指定',
   '不具合の報告・改善のご要望',
 ];
@@ -39,16 +39,18 @@ export default function ContactPage() {
         </p>
       </section>
 
-      <Clause heading="変換代行をご依頼の場合">
+      <Clause heading={`${AGENCY.name}をご依頼の場合`}>
         <p>
-          料金は1件あたり{AGENCY.price}（税込）です。次の5つをメールでお送りください。
+          料金は1データあたり{AGENCY.price}（税込）です。
+          {AGENCY.tiers.map((tier) => `${tier.name}は${tier.price}`).join('、')}です。どちらになるかは、データを見て作業の前にお伝えします。
+          次の5つをメールでお送りください。
         </p>
         <ul className="space-y-2">
           {[
-            '支給データ（QRコードの画像、またはQRコードが入ったPDF・Illustrator・InDesignのファイル）',
-            '仕上がりサイズ（例：15mm角）',
-            '余白のセル数（ご指定がなければ4セルで書き出します）',
-            '出力形式（PDF・SVG・PNG・EPSなど）',
+            'QRコードを入れたい入稿データ（Illustrator・InDesign・PDF）',
+            'QRコードの中身（URLなど）、または元のQRコードの画像',
+            '入れる位置と大きさ（例：右下に15mm角。お任せも可）',
+            '出す印刷会社（決まっていれば）',
             'ご希望の納期',
           ].map((item) => (
             <li key={item} className="flex gap-2.5">
@@ -59,8 +61,8 @@ export default function ContactPage() {
         </ul>
         <p>
           内容を確認して、お受けできるかどうかを原則1営業日以内にお返しします。
-          お受けできる場合にかぎり、お支払いのご案内をお送りします。お断りする場合、費用は発生しません。
-          ご入金の確認後、原則として翌営業日までにメールで納品します。
+          お断りする場合、費用は発生しません。
+          2営業日以内をめやすにメールで納品し、そのときに請求書をお送りします。請求書の日付から7日以内にお振込みください。
         </p>
         <p>
           支払方法とキャンセルの条件は
